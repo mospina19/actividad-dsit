@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Actividad práctica DSIT · Universidad de los Andes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block" rel="stylesheet">
+<style>
+/* ===== Tokens ID Uniandes ===== */
+:root{
+  --brand-black:#191916; --brand-white:#ffffff;
+  --n20:#fcfcfa; --n30:#f5f5f2; --n40:#e0dfda; --n50:#bab9b3; --n60:#8a8984; --n70:#73726d; --n80:#616160; --n90:#4d4d4c;
+  --yellow:#ffe41e; --yellow2:#fff18b;
+  --bg:#f7f6f0; --surface:#fcfcfa; --surface-2:#f5f5f2;
+  --text:#1f1f1c; --text-2:#535351; --text-dis:#bab9b3; --link:#2442b2;
+  --success:#095d0d; --alert:#e58617; --error:#a9142f;
+  --border:#191916; --line:#e0dfda; --focus-ring:#191916;
+  --btn-bg:#191916; --btn-ink:#fcfcfa; --btn-hover-bg:#ffe41e; --btn-hover-ink:#1f1f1c; --btn-focus-bg:#fff18b;
+  --btn2-hover:#bab9b3; --btn3-hover:#f5f5f2; --sel-bg:#f5f5f2;
+  --chip-sel-bg:#4d4d4c; --chip-sel-ink:#fcfcfa; --chip-fill:#f5f5f2;
+  --font-sans:"Source Sans 3","Source Sans Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sp-04:4px; --sp-08:8px; --sp-12:12px; --sp-16:16px; --sp-20:20px; --sp-24:24px; --sp-32:32px; --sp-40:40px; --sp-48:48px; --sp-64:64px; --sp-80:80px;
+  --margin:20px;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (min-width:768px){ :root{ --margin:48px; } }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#333331; --surface:#4d4c4c; --surface-2:#3e3e3c;
+    --text:#fcfcfa; --text-2:#a4a4a4; --text-dis:#838277; --link:#7ca0db;
+    --success:#79db7d; --alert:#f5ad58; --error:#f598a9;
+    --border:#fcfcfa; --line:#616160; --focus-ring:#fcfcfa;
+    --btn-bg:#fcfcfa; --btn-ink:#1f1f1c; --btn-hover-bg:#f2e055; --btn-hover-ink:#1f1f1c;
+    --btn2-hover:#4d4d4c; --btn3-hover:#4d4d4c; --sel-bg:#3e3e3c; --chip-sel-bg:#fcfcfa; --chip-sel-ink:#1f1f1c; --chip-fill:#4d4d4c;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#333331; --surface:#4d4c4c; --surface-2:#3e3e3c;
+  --text:#fcfcfa; --text-2:#a4a4a4; --text-dis:#838277; --link:#7ca0db;
+  --success:#79db7d; --alert:#f5ad58; --error:#f598a9;
+  --border:#fcfcfa; --line:#616160; --focus-ring:#fcfcfa;
+  --btn-bg:#fcfcfa; --btn-ink:#1f1f1c; --btn-hover-bg:#f2e055; --btn-hover-ink:#1f1f1c;
+  --btn2-hover:#4d4d4c; --btn3-hover:#4d4d4c; --sel-bg:#3e3e3c; --chip-sel-bg:#fcfcfa; --chip-sel-ink:#1f1f1c; --chip-fill:#4d4d4c;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 140px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ms{font-family:"Material Symbols Outlined";font-weight:400;font-style:normal;font-size:20px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24;vertical-align:-4px;flex:0 0 auto}
+
+/* ===== Navbar (ID Uniandes) ===== */
+[hidden]{display:none!important}
+.top{position:sticky;top:0;z-index:20}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--brand-black);z-index:30}
+.wrap{max-width:1216px;margin:0 auto;padding:0 var(--margin)}
+.nb{background:var(--brand-black);color:var(--n20)}
+.nb-bar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-08) var(--sp-16);max-width:1504px;margin:0 auto;min-height:48px;padding:6px var(--margin)}
+@media (min-width:768px){.nb-bar{min-height:56px;gap:var(--sp-24);flex-wrap:nowrap}}
+@media (min-width:1280px){.nb-bar{padding:0 var(--sp-64)}}
+.nb-brand{display:flex;align-items:center;gap:var(--sp-12);background:none;border:0;padding:0;color:inherit;cursor:pointer;text-align:left;min-width:0;border-radius:0}
+@media (min-width:768px){.nb-brand{gap:var(--sp-16)}}
+.logo{display:block;height:28px;width:auto;flex:0 0 auto}
+@media (min-width:768px){.logo{height:34px}}
+.nb-divider{width:1px;height:24px;background:currentColor;flex:0 0 auto}
+@media (min-width:768px){.nb-divider{height:32px}}
+.nb-unit{max-width:20ch;font-size:14px;line-height:16px;letter-spacing:-.01em;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nb-nav{flex:1;display:none;justify-content:center;min-width:0}
+@media (min-width:1280px){.nb-nav{display:flex}}
+.nb-list{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--sp-04) var(--sp-20);list-style:none;margin:0;padding:0}
+.nb-link{background:none;border:0;border-bottom:1px solid transparent;color:inherit;cursor:pointer;padding:var(--sp-04) 0;font-size:18px;line-height:24px;font-weight:400;letter-spacing:.01em;border-radius:0}
+.nb-link:hover{border-bottom-color:currentColor}
+.nb-link.is-active{border-bottom:2px solid var(--yellow)}
+.nb-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-08);min-width:40px;height:40px;padding:0 var(--sp-08);background:transparent;border:0;color:inherit;font-size:16px;line-height:20px;font-weight:600;letter-spacing:.02em;cursor:pointer;border-radius:0}
+.nb-btn:hover,.nb-btn[aria-pressed="true"],.nb-btn[aria-expanded="true"]{background:var(--n90)}
+.nb button:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+.nb-timer{margin-left:auto}
+.nb-menu{order:2;margin-left:auto}
+.nb-menu .mtxt{display:none}
+@media (min-width:768px){.nb-menu{order:0;margin-left:0}.nb-menu .mtxt{display:inline}}
+@media (min-width:1280px){.nb-menu{display:none}}
+@media (max-width:767px){
+  .nb-timer{order:3;width:100%;margin-left:0;border-top:1px solid var(--n80);padding-top:4px}
+  .nb-timer:empty{display:none}
+  .nb-timer .timer{width:100%}
+  .nb-timer .t-clock{margin-right:auto;text-align:left}
+}
+.timer{display:flex;align-items:center;gap:var(--sp-08)}
+.t-lab{font-size:.875rem;color:#a4a4a4}
+.t-clock{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:600;min-width:3.4ch;text-align:right;letter-spacing:.02em}
+.timer.warn .t-clock{color:var(--yellow)}
+.tbar{height:4px;background:#2e2e2b}
+.tbar b{display:block;height:100%;width:0;background:var(--yellow);transition:width 1s linear}
+@media (prefers-reduced-motion: reduce){.tbar b{transition:none}}
+.nb-panel{border-top:1px solid var(--n80);padding:var(--sp-08) var(--margin) var(--sp-24)}
+@media (min-width:1280px){.nb-panel{display:none!important}}
+.nb-panel ul{list-style:none;margin:0 auto;padding:0;max-width:1216px}
+.nb-panel-link{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--n80);color:inherit;cursor:pointer;padding:var(--sp-12) 0;font-size:18px;line-height:24px;font-weight:400;border-radius:0}
+.nb-panel-link.is-active{font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.sync{font-size:.875rem;color:#a4a4a4}
+/* Stepper de progreso general */
+.gstep{background:var(--surface);border-bottom:1px solid var(--line);color:var(--text)}
+.gs-list{list-style:none;margin:0 auto;padding:var(--sp-12) 0;display:grid;grid-template-columns:repeat(6,1fr);max-width:1000px}
+.gs-step{position:relative}
+.gs-step + .gs-step::before{content:"";position:absolute;top:17px;left:calc(-50% + 22px);right:calc(50% + 22px);height:2px;background:var(--n40)}
+.gs-step.after-active::before{background:var(--border)}
+.gs-step.after-success::before{background:var(--success)}
+.gs-btn{width:100%;background:none;border:0;padding:0 var(--sp-04);display:flex;flex-direction:column;align-items:center;gap:var(--sp-08);cursor:pointer;color:var(--text);border-radius:0}
+.gs-sym{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--n40);background:var(--surface);color:var(--text-2);display:grid;place-items:center;font-weight:700;font-size:16px;line-height:1}
+.gs-sym .ms{font-size:20px;vertical-align:0}
+.gs-btn:hover:not([disabled]) .gs-sym{border-color:var(--border)}
+.gs-btn[disabled]{cursor:default}
+.gs-step.active .gs-sym{border-color:var(--border);color:var(--text)}
+.gs-step.success .gs-sym{background:var(--success);border-color:var(--success);color:var(--surface)}
+.gs-lab{font-size:16px;line-height:24px;color:var(--text-2);white-space:nowrap;max-width:16ch;overflow:hidden;text-overflow:ellipsis}
+.gs-step.active .gs-lab,.gs-step.success .gs-lab{color:var(--text);font-weight:700}
+.gs-cur{display:none}
+@media (max-width:767px){
+  .gs-lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .gs-list{padding:var(--sp-08) 0 var(--sp-04)}
+  .gs-cur{display:block;margin:0 0 var(--sp-08);text-align:center;font-size:.875rem;line-height:1.25rem;font-weight:600}
+}
+/* Tabs de equipos (Evaluación) */
+.ttabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-bottom:var(--sp-32)}
+.ttab{border:0;background:transparent;padding:var(--sp-12) var(--sp-12);cursor:pointer;text-align:left;border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;gap:var(--sp-08);align-items:flex-start;color:var(--text-2);border-radius:0}
+.ttab:hover{background:var(--brand-black);color:var(--n20)}
+.ttab[aria-selected="true"]{border-bottom-color:var(--text);color:var(--text)}
+.ttab[aria-selected="true"]:hover{color:var(--n20)}
+.ttab .tt{display:block;font-size:1rem;line-height:1.25rem}
+.ttab[aria-selected="true"] .tt{font-weight:700}
+.ttab .ts{display:block;font-size:.8125rem;line-height:1.125rem;margin-top:2px}
+@media (max-width:560px){.ttab .ms{display:none}.ttab{padding:var(--sp-12) var(--sp-08)}.ttab .tt{font-size:.875rem}}
+
+/* ===== Tipografía ===== */
+main{max-width:1216px;margin:0 auto;padding:var(--sp-40) var(--margin) var(--sp-80)}
+h1{font-size:2rem;line-height:2.5rem;font-weight:700;letter-spacing:-.02em;margin:0 0 var(--sp-16)}
+@media (min-width:768px){h1{font-size:2.5rem;line-height:3rem}}
+@media (min-width:1280px){h1{font-size:3rem;line-height:3.5rem}}
+h2{font-size:1.5rem;line-height:1.75rem;font-weight:500;margin:0 0 var(--sp-12)}
+h3{font-size:1.25rem;line-height:1.75rem;font-weight:600;margin:0 0 var(--sp-08)}
+.lead{font-size:1rem;line-height:1.5rem;color:var(--text);max-width:72ch;margin:0 0 var(--sp-32)}
+@media (min-width:768px){.lead{font-size:1.125rem;line-height:1.75rem}}
+@media (min-width:1280px){.lead{font-size:1.25rem;line-height:2rem}}
+.meta{color:var(--text-2);font-size:.875rem;line-height:1.25rem}
+.divider{width:130px;height:4px;background:var(--yellow);border:0;margin:0 0 var(--sp-24)}
+.section{margin-top:var(--sp-48)}
+.eyebrow{font-size:.875rem;line-height:1.25rem;color:var(--text-2);margin:0 0 var(--sp-08)}
+
+/* ===== Botones (rectos) ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-08);min-height:52px;padding:0 var(--sp-24);border:1px solid var(--border);background:transparent;color:var(--text);font-size:1.125rem;line-height:1.25rem;font-weight:600;letter-spacing:.04em;cursor:pointer;border-radius:0;text-decoration:none}
+.btn:hover{background:var(--btn2-hover)}
+.btn.primary{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--btn-ink)}
+.btn.primary:hover{background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-ink)}
+.btn.primary:focus-visible{background:var(--btn-focus-bg);border-color:var(--btn-focus-bg);color:#1f1f1c}
+.btn.tertiary{border-color:transparent}
+.btn.tertiary:hover{background:var(--btn3-hover);border-color:var(--border)}
+.btn.small{min-height:40px;padding:0 var(--sp-16);font-size:1rem;line-height:1rem}
+.btn[disabled]{background:var(--n40);border-color:var(--n40);color:var(--n90);cursor:default}
+.actions{display:flex;gap:var(--sp-12);flex-wrap:wrap;align-items:center;margin-top:var(--sp-40)}
+
+/* ===== Chip ===== */
+.chip{display:inline-flex;align-items:center;gap:var(--sp-04);height:28px;padding:0 var(--sp-12);font-size:11px;line-height:1;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:999px}
+.chip.medium{height:36px;padding:0 var(--sp-16);font-size:12px}
+.chip.fill{background:var(--chip-fill)}
+.chip.is-selected{background:var(--chip-sel-bg);color:var(--chip-sel-ink);border-color:var(--chip-sel-bg);font-weight:600}
+.chip .ms{font-size:16px;vertical-align:0}
+.acc{margin-top:var(--sp-24);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.acc-h{margin:0;font-size:1rem;line-height:1.5rem}
+.acc-btn{width:100%;min-height:48px;display:flex;justify-content:space-between;align-items:center;gap:var(--sp-12);background:transparent;border:0;padding:var(--sp-08) var(--sp-12);color:var(--text);font-weight:700;font-size:1rem;cursor:pointer;text-align:left;border-radius:0}
+.acc-btn:hover{background:var(--btn3-hover)}
+.acc-btn:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--focus-ring)}
+.acc-panel{padding:var(--sp-08) var(--sp-12) var(--sp-20)}
+.levels{margin:0;display:grid;gap:var(--sp-16)}
+.levels dt{font-weight:700}
+.levels dd{margin:var(--sp-04) 0 0;color:var(--text-2);max-width:72ch}
+.mesa-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-12)}
+
+/* ===== Bienvenida ===== */
+.mesas{display:grid;gap:var(--sp-16);grid-template-columns:1fr;margin-top:var(--sp-24)}
+@media (min-width:768px){.mesas{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1280px){.mesas{grid-template-columns:repeat(3,1fr);gap:var(--sp-32)}}
+.mesa{text-align:left;background:var(--surface);border:1px solid var(--line);padding:var(--sp-24);cursor:pointer;display:flex;flex-direction:column;gap:var(--sp-12);min-height:180px;border-radius:0;color:var(--text)}
+.mesa:hover{border-color:var(--border)}
+.mesa .num{font-family:var(--font-serif);font-size:3rem;line-height:3.5rem;font-weight:500;letter-spacing:-.02em}
+.mesa strong{font-size:1.25rem;line-height:1.5rem;font-weight:500}
+@media (min-width:1280px){.mesa strong{font-size:1.5rem;line-height:1.75rem}}
+.mesa .go{margin-top:auto;display:flex;align-items:center;gap:6px;font-weight:600;letter-spacing:.04em;font-size:1rem}
+.mesa.current{border:2px solid var(--border);padding:calc(var(--sp-24) - 1px)}
+
+/* ===== Caso ===== */
+.quote{margin:0;border-left:1px solid var(--n50);padding:var(--sp-04) 0 var(--sp-04) var(--sp-24);font-family:var(--font-serif);font-size:1.25rem;line-height:1.75rem;max-width:68ch}
+@media (min-width:1280px){.quote{font-size:1.5rem;line-height:2rem;font-weight:400}}
+
+/* ===== Preguntas clave ===== */
+.box{background:var(--surface);border:1px solid var(--line);padding:var(--sp-24)}
+@media (min-width:768px){.box{padding:var(--sp-32)}}
+.facts{display:flex;flex-wrap:wrap;gap:var(--sp-08) var(--sp-32);margin:0 0 var(--sp-24)}
+.facts div{font-size:.875rem;line-height:1.25rem}
+.facts dt{color:var(--text-2)}
+.facts dd{margin:0;font-weight:600}
+.notes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-16);max-width:80ch}
+.notes li{border-left:1px solid var(--n50);padding-left:var(--sp-24);font-size:1rem;line-height:1.5rem}
+@media (min-width:1280px){.notes li{font-size:1.125rem;line-height:1.75rem}}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-16);flex-wrap:wrap}
+.progress{display:flex;align-items:center;gap:var(--sp-08);font-size:.875rem;color:var(--text-2)}
+.progress .bar{width:120px;height:4px;background:var(--line)}
+.progress .bar b{display:block;height:100%;background:var(--text)}
+.qs{display:flex;flex-direction:column;gap:var(--sp-16);margin-top:var(--sp-16)}
+.qsec{border:1px solid var(--line);background:var(--surface-2)}
+.qsec .qhead{padding:var(--sp-20) var(--sp-24) var(--sp-16);border-bottom:1px solid var(--line);background:var(--surface)}
+.qsec .qhead h2{margin:0}
+.qscroll{margin:0;padding:var(--sp-16) var(--sp-24) var(--sp-24);max-height:clamp(360px, calc(100vh - 360px), 720px);overflow-y:auto;overscroll-behavior:auto;scroll-padding-top:var(--sp-16)}
+.qscroll:focus-visible{outline:2px solid var(--focus-ring);outline-offset:-2px}
+@media (max-width:767px){.qsec .qhead,.qscroll{padding-left:var(--sp-16);padding-right:var(--sp-16)}.qscroll{max-height:calc(100vh - 300px);min-height:320px}}
+.qcard{background:var(--surface);border:1px solid var(--line);padding:var(--sp-20) var(--sp-24) var(--sp-24)}
+.qcard .qn{display:flex;justify-content:space-between;gap:var(--sp-12);font-size:.875rem;color:var(--text-2);margin-bottom:var(--sp-04)}
+.qcard .ok{color:var(--success);display:none;align-items:center;gap:4px;font-weight:600}
+.qcard.done .ok{display:inline-flex}
+.qcard label.ql{display:block;font-size:1.125rem;line-height:1.5rem;font-weight:600;margin-bottom:var(--sp-12)}
+.field{width:100%;background:var(--bg);border:0;border-bottom:1px solid var(--text);padding:var(--sp-12);min-height:96px;resize:vertical;font-size:1rem;line-height:1.5rem;border-radius:0}
+.field:focus{outline:none;box-shadow:inset 0 0 0 1px var(--text);border-bottom-color:var(--text)}
+.field::placeholder{color:var(--text-2)}
+
+/* ===== Evaluación ===== */
+.stepper{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);margin:0 0 var(--sp-32);padding:0 0 var(--sp-24);border-bottom:1px solid var(--line)}
+.step{position:relative}
+.step + .step::before{content:"";position:absolute;top:17px;left:calc(-50% + 26px);right:calc(50% + 26px);height:2px;background:var(--n50)}
+.step.after-success::before{background:var(--success)}
+.step button{width:100%;background:none;border:0;padding:0 var(--sp-04);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:var(--sp-08);color:var(--text);text-align:center;border-radius:0}
+.sym{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--n40);background:var(--surface);color:var(--text-2);font-weight:700;font-size:1rem}
+.step button:hover .sym{border-color:var(--border)}
+.step.active .sym{border-color:var(--border);color:var(--text)}
+.step.success .sym{background:var(--success);border-color:var(--success);color:var(--surface)}
+.step .sym .ms{font-size:22px;vertical-align:0}
+.sl{font-weight:700;font-size:1rem;line-height:1.25rem}
+.step.pending .sl{font-weight:400;color:var(--text-2)}
+.ss{font-size:.8125rem;line-height:1.125rem;color:var(--text-2)}
+@media (max-width:420px){.sl{font-size:.875rem}}
+.team-head{margin-bottom:var(--sp-08)}
+.team-head h1{display:flex;align-items:center;gap:var(--sp-12)}
+.team-head h1 .ms{font-size:36px}
+.team-head p{margin:0}
+fieldset.crit{border:0;padding:0;margin:var(--sp-40) 0 0}
+fieldset.crit legend{font-size:1.125rem;line-height:1.5rem;font-weight:600;display:flex;gap:var(--sp-12);align-items:flex-start;padding:0;margin-bottom:var(--sp-16)}
+.cn{flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--n50);font-size:.875rem;font-weight:700;background:var(--surface)}
+fieldset.crit.done .cn{background:var(--text);border-color:var(--text);color:var(--bg)}
+.opts{display:grid;gap:var(--sp-12);grid-template-columns:1fr}
+@media (min-width:768px){.opts{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}}
+.opt{position:relative;display:flex;flex-direction:column;gap:var(--sp-08);background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--lv);padding:var(--sp-16);cursor:pointer;font-size:.9375rem;line-height:1.375rem}
+.opt:hover{border-color:var(--border);border-top-color:var(--lv)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .pts{font-weight:700;font-size:1rem;display:flex;align-items:center;gap:var(--sp-08)}
+.opt .pts::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid var(--text);flex:0 0 auto}
+.opt.sel{background:var(--sel-bg);outline:2px solid var(--border);outline-offset:-2px}
+.opt.sel .pts::before{background:var(--text);box-shadow:inset 0 0 0 3px var(--sel-bg)}
+.opt:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px}
+.lv-low{--lv:var(--success)} .lv-mid{--lv:var(--alert)} .lv-high{--lv:var(--error)} .lv-unk{--lv:var(--n50)}
+.opt.unk{border-style:dashed;border-top-style:solid}
+.qbox{margin-top:var(--sp-12);background:var(--surface);border:1px solid var(--line);padding:var(--sp-16)}
+.qbox label{display:block;font-weight:600;margin-bottom:var(--sp-08)}
+.totalbar{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--border);padding:var(--sp-12) 0 calc(var(--sp-12) + env(safe-area-inset-bottom,0px))}
+.totalbar .wrap{display:flex;align-items:center;gap:var(--sp-16);flex-wrap:wrap;justify-content:space-between}
+.tot{display:flex;align-items:baseline;gap:var(--sp-08)}
+.tot b{font-family:var(--font-serif);font-size:2rem;line-height:2.25rem;font-weight:500;font-variant-numeric:tabular-nums}
+.scale{display:flex;gap:var(--sp-08);flex-wrap:wrap}
+
+/* ===== Decisión ===== */
+.res-row{display:grid;grid-template-columns:1fr;gap:var(--sp-08);padding:var(--sp-16) 0;border-bottom:1px solid var(--line)}
+.res-row:last-child{border-bottom:0;padding-bottom:0}
+.res-row:first-child{padding-top:0}
+@media (min-width:768px){.res-row{grid-template-columns:260px 1fr;align-items:center}}
+.res-row .nm{font-weight:700;display:flex;gap:var(--sp-08);align-items:flex-start}
+.res-row .nm small{display:block;font-weight:400;color:var(--text-2);font-size:.875rem}
+.qlist{list-style:none;padding:0;margin:var(--sp-16) 0 0;display:flex;flex-direction:column;gap:var(--sp-12)}
+.qlist li{background:var(--bg);border:1px solid var(--line);padding:var(--sp-16)}
+.qlist .src{font-size:.875rem;color:var(--text-2);margin-bottom:var(--sp-08);display:flex;gap:6px;align-items:center}
+.qlist .row{display:flex;justify-content:space-between;gap:var(--sp-12);align-items:center}
+.qlist .field{background:var(--surface);min-height:72px}
+.empty{color:var(--text-2)}
+.picker{list-style:none;margin:var(--sp-16) 0 0;padding:0;border-top:1px solid var(--line)}
+.picker li{display:flex;justify-content:space-between;gap:var(--sp-16);align-items:center;padding:var(--sp-12) 0;border-bottom:1px solid var(--line)}
+.picker .st{display:block;font-size:.875rem;color:var(--text-2)}
+
+/* ===== Presentación ===== */
+.pres{background:var(--brand-black);color:var(--n20);padding:var(--sp-32) var(--sp-24)}
+@media (min-width:768px){.pres{padding:var(--sp-64) var(--sp-48)}}
+.pres:fullscreen{overflow:auto}
+.pres-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-24)}
+.pres-top img{height:40px;width:auto}
+.pres .eyebrow{color:#a4a4a4}
+.pres h1{color:var(--n20);margin:0;max-width:20ch}
+.psec{margin-top:var(--sp-48)}
+.psec .divider{margin-bottom:var(--sp-16)}
+.psec h2{color:var(--n20)}
+.psec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-16);flex-wrap:wrap;margin-bottom:var(--sp-12)}
+.psec-head h2{margin:0}
+.btn.xs{min-height:32px;padding:0 var(--sp-12);font-size:.875rem;line-height:1rem;gap:6px;letter-spacing:.02em}
+.btn.xs .ms{font-size:18px}
+.btn.on-dark{color:var(--n20);border-color:var(--n70);background:transparent}
+.field.on-dark{background:#2e2e2b;color:var(--n20);border-bottom-color:var(--n20);min-height:80px;margin-top:var(--sp-08)}
+.field.on-dark::placeholder{color:#a4a4a4}
+.field.on-dark:focus{box-shadow:inset 0 0 0 1px var(--n20)}
+.btn.on-dark:hover{background:var(--yellow);border-color:var(--yellow);color:#1f1f1c}
+.btn.on-dark:focus-visible{outline-color:var(--yellow)}
+.pctx{font-family:var(--font-serif);font-size:1.25rem;line-height:1.75rem;max-width:72ch;margin:0;color:var(--n20)}
+.pans{display:grid;grid-template-columns:1fr;gap:var(--sp-24) var(--sp-32);margin:0}
+@media (min-width:768px){.pans{grid-template-columns:repeat(2,1fr)}}
+.pans dt{font-weight:600;color:var(--n20)}
+.pans dd{margin:var(--sp-04) 0 0;color:#d6d5d0}
+.pans .none{color:#a4a4a4;font-style:italic}
+.pcards{display:grid;grid-template-columns:1fr;gap:var(--sp-16)}
+@media (min-width:768px){.pcards{grid-template-columns:repeat(3,1fr)}}
+.pcard{border:1px solid var(--n80);padding:var(--sp-24)}
+.pcard .lab{display:flex;align-items:flex-start;gap:var(--sp-08);color:#a4a4a4;line-height:1.5rem}
+.pcard .lab .ms{margin-top:2px}
+@media (min-width:768px){.pcard .lab{min-height:3rem}}
+.pres.export .pcard .lab{min-height:3rem}
+.pcard .lvl{font-family:var(--font-serif);font-size:2rem;line-height:2.5rem;font-weight:500;margin:var(--sp-12) 0 var(--sp-04);color:var(--n20)}
+.pcard .pp{color:#a4a4a4;font-variant-numeric:tabular-nums;font-size:.875rem}
+.pqs ol{margin:0;padding-left:1.4em;max-width:80ch}
+.pqs li{margin-bottom:var(--sp-08);font-size:1.125rem;line-height:1.75rem}
+.pres.export{width:1200px;padding:64px 56px}
+.pres.export .pans,.pres.export .pcards{grid-template-columns:repeat(2,1fr)}
+.pres.export .pcards{grid-template-columns:repeat(3,1fr)}
+.pres.export h1{font-size:48px;line-height:56px}
+
+/* ===== Facilitador ===== */
+.tablewrap{overflow-x:auto;margin-top:var(--sp-24);border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:.9375rem}
+th,td{text-align:left;padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;background:var(--surface-2)}
+.insight{margin-top:var(--sp-24);border-left:4px solid var(--yellow);background:var(--surface);padding:var(--sp-16) var(--sp-24)}
+
+/* ===== Aviso y diálogo ===== */
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand-black);color:var(--n20);padding:var(--sp-12) var(--sp-12) var(--sp-12) var(--sp-20);display:flex;gap:var(--sp-12);align-items:center;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:calc(100vw - 32px)}
+.toast .btn{color:var(--n20);border-color:var(--n20);min-height:40px;font-size:1rem}
+.toast .btn:hover{background:var(--yellow);border-color:var(--yellow);color:#1f1f1c}
+.toast .x{background:none;border:0;color:var(--n20);cursor:pointer;display:grid;place-items:center;width:32px;height:32px}
+.dlg-bg{position:fixed;inset:0;background:rgba(25,25,22,.6);display:grid;place-items:center;z-index:50;padding:var(--sp-16)}
+.dlg{background:var(--surface);color:var(--text);padding:var(--sp-32);max-width:460px;width:100%;border-top:4px solid var(--yellow)}
+.dlg p{margin:0 0 var(--sp-24);font-size:1.125rem;line-height:1.75rem}
+.dlg .actions{margin-top:0;justify-content:flex-end}
+@media print{.top,.totalbar,.toast,.no-print{display:none!important}main{padding:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="nb">
+    <div class="nb-bar">
+      <button class="nb-brand" data-act="go:inicio" aria-label="Ir a la bienvenida">
+        <svg class="logo" width="121" height="48" viewBox="0 0 121 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle"><title id="logoTitle">Universidad de los Andes</title>
+<path d="M32.9836 36.6065C27.4787 40.1906 21.7571 39.9982 21.7571 39.9982C21.7571 39.9982 21.5958 39.2642 21.6613 38.0037C21.7268 36.7381 22.4124 37.0975 22.9065 36.1003C23.0879 35.7358 23.2442 35.4878 23.5215 34.6373C23.5316 34.6019 23.1938 28.5475 23.1031 25.9809C23.0577 24.599 22.7956 22.2906 22.4931 20.043C22.3167 18.7116 21.9134 17.6587 21.7268 16.3931C21.4546 14.5657 21.1421 12.5104 21.1421 12.5104C20.9203 13.0926 20.5976 15.2643 20.275 17.7194C20.1187 18.8939 19.9675 20.1392 19.8213 21.2984C19.5138 23.7586 18.7526 30.3344 18.6316 30.6939C18.4602 31.2355 18.4401 30.5471 18.4401 30.5471C18.4401 30.5471 18.8938 23.6473 19.0299 20.6201C19.0954 19.1419 19.2063 17.5119 19.3878 15.9527C19.5289 14.7834 19.7054 13.6494 19.9373 12.642C19.9373 12.642 20.7237 10.2527 20.9757 10.2071C21.2278 10.1616 22.1301 11.7106 22.4427 13.0926C23.1383 16.2109 23.5467 16.6108 24.076 19.8861C24.5801 22.9993 25.0388 25.6013 25.1044 26.0265C25.3262 27.5705 25.2153 32.3897 24.8271 34.3083C24.7364 34.8297 24.7061 35.022 24.3684 35.3713C23.5668 36.1813 23.0022 37.1482 23.0022 37.7809C23.0022 38.4137 22.8964 38.3985 23.0426 38.7681C23.0426 38.7681 24.0962 40.3475 30.1454 36.728C30.1454 36.728 32.0409 35.7308 32.0409 33.5388V11.336C32.0409 11.336 26.042 9.29592 21.4193 9.29592C16.7967 9.29592 11.0196 11.3309 11.0196 11.3309V33.4376C11.0196 34.7942 11.2162 37.3507 13.152 38.2214C13.152 38.2214 8 36.4496 8 33.4123V9.45285C8 9.45285 15.8641 8 21.4294 8C26.9948 8 35 9.45285 35 9.45285V33.4376C35 35.503 32.9785 36.6015 32.9785 36.6015L32.9836 36.6065Z" fill="#FCFCFA"/>
+<path d="M106.261 17.8007C105.723 18.1019 105.002 18.25 104.088 18.25C103.175 18.25 102.464 17.9735 101.956 17.4156C101.447 16.8627 101.19 16.0875 101.19 15.0903C101.19 14.093 101.447 13.2932 101.956 12.6958C102.444 12.1231 103.106 11.8417 103.921 11.8417C104.281 11.8417 104.592 11.8812 104.859 11.9602V9.45215H106.266V17.8007H106.261ZM104.854 12.7254C104.666 12.6711 104.459 12.6464 104.227 12.6464C103.131 12.6464 102.583 13.4364 102.583 15.0162C102.583 16.5961 103.096 17.3514 104.123 17.3514C104.459 17.3514 104.706 17.307 104.854 17.2132V12.7254Z" fill="#FCFCFA"/>
+<path d="M112.687 14.9812L108.876 15.5342C108.99 16.6894 109.557 17.2671 110.574 17.2671C111.177 17.2671 111.7 17.1535 112.149 16.9264L112.485 17.8151C111.952 18.1064 111.266 18.2545 110.426 18.2545C109.533 18.2545 108.827 17.9731 108.308 17.4102C107.795 16.8474 107.533 16.0476 107.533 15.0108C107.533 13.9741 107.77 13.2138 108.244 12.6509C108.718 12.0832 109.365 11.8018 110.189 11.8018C111.014 11.8018 111.656 12.0733 112.085 12.6164C112.52 13.1594 112.717 13.9494 112.687 14.9862V14.9812ZM111.374 14.4283C111.374 13.2483 110.96 12.6608 110.145 12.6608C109.71 12.6608 109.38 12.8336 109.153 13.1792C108.896 13.5544 108.777 14.1024 108.792 14.8183L111.374 14.4233V14.4283Z" fill="#FCFCFA"/>
+<path d="M41.8124 34.7493H39.6006V21.0835H41.8124V34.7493Z" fill="#FCFCFA"/>
+<path d="M52.012 29.8765C52.012 31.3872 51.6763 32.5869 51.0147 33.4805C50.289 34.4482 49.272 34.9271 47.9538 34.9271C46.6356 34.9271 45.6185 34.4432 44.8928 33.4805C44.2312 32.5869 43.8955 31.3872 43.8955 29.8765C43.8955 28.3657 44.2263 27.1512 44.8928 26.2576C45.6185 25.2949 46.6356 24.811 47.9538 24.811C49.272 24.811 50.3038 25.2949 51.0147 26.2576C51.6763 27.1512 52.012 28.3558 52.012 29.8765ZM49.82 29.8567C49.82 27.4178 49.1979 26.1983 47.9538 26.1983C46.7096 26.1983 46.0925 27.4178 46.0925 29.8567C46.0925 32.2956 46.7096 33.4262 47.9538 33.4262C49.1979 33.4262 49.82 32.2364 49.82 29.8567Z" fill="#FCFCFA"/>
+<path d="M59.5894 31.9398C59.5894 32.7593 59.2685 33.4604 58.6267 34.038C57.9848 34.6156 57.1456 34.9069 56.1088 34.9069C54.9979 34.9069 54.0945 34.6749 53.4082 34.2009L53.9908 32.7889C54.4598 33.1641 55.072 33.3518 55.8224 33.3518C56.2668 33.3518 56.6321 33.2234 56.9086 32.9617C57.185 32.7001 57.3233 32.3742 57.3233 31.9743C57.3233 31.5744 57.2147 31.2436 56.9974 31.0067C56.7802 30.7697 56.4149 30.5574 55.8915 30.3648C54.4055 29.7971 53.6649 28.8837 53.6649 27.6297C53.6649 26.8299 53.9513 26.1585 54.524 25.6154C55.0967 25.0723 55.8422 24.8008 56.7605 24.8008C57.7479 24.8008 58.597 25.0279 59.2932 25.492L58.7501 26.7756C58.3058 26.4152 57.7874 26.2325 57.1949 26.2325C56.7605 26.2325 56.4198 26.356 56.173 26.6028C55.9261 26.8497 55.8027 27.1558 55.8027 27.5162C55.8027 28.158 56.2865 28.6714 57.2492 29.0565C58.8044 29.6835 59.5845 30.6463 59.5845 31.9348L59.5894 31.9398Z" fill="#FCFCFA"/>
+<path d="M75.8918 34.7489H73.3147L72.2729 31.2683H67.9037L66.8224 34.7489H64.5761L69.0639 21.2017H71.4238L75.8918 34.7489ZM71.9125 29.8069L70.5154 25.0378C70.3179 24.3663 70.1994 23.8232 70.1599 23.4036H70.1204C70.0562 23.7591 69.9278 24.3021 69.7452 25.0378L68.2887 29.8069H71.9125Z" fill="#FCFCFA"/>
+<path d="M84.982 34.7494H82.7702V27.8276C82.7702 26.7415 82.1877 26.1984 81.0176 26.1984C80.4597 26.1984 79.9561 26.2922 79.497 26.4699V34.7494H77.2852V25.5122C78.2874 25.0431 79.5611 24.8062 81.1064 24.8062C82.4691 24.8062 83.4812 25.1073 84.1329 25.7096C84.7006 26.2181 84.982 26.9143 84.982 27.7931V34.7494Z" fill="#FCFCFA"/>
+<path d="M94.9447 34.2209C94.1004 34.69 92.9649 34.9269 91.5381 34.9269C90.1113 34.9269 88.9807 34.4925 88.1858 33.6236C87.391 32.7546 86.9911 31.5401 86.9911 29.9849C86.9911 28.4298 87.391 27.1659 88.1858 26.2377C88.961 25.3441 89.9879 24.8998 91.2666 24.8998C91.8343 24.8998 92.3231 24.959 92.7329 25.0825V21.1328H94.9447V34.2259V34.2209ZM92.7329 33.2977V26.2723C92.4416 26.1884 92.1207 26.1439 91.7553 26.1439C90.0372 26.1439 89.1831 27.3831 89.1831 29.8566C89.1831 32.3301 89.9829 33.5149 91.5924 33.5149C92.1256 33.5149 92.5058 33.4458 92.7329 33.2977Z" fill="#FCFCFA"/>
+<path d="M105 29.807L99.0213 30.6759C99.2039 32.4878 100.088 33.3913 101.682 33.3913C102.625 33.3913 103.445 33.2086 104.146 32.8482L104.669 34.2404C103.835 34.6996 102.764 34.9267 101.445 34.9267C100.048 34.9267 98.9423 34.4873 98.1326 33.6035C97.3229 32.7248 96.923 31.4658 96.923 29.8366C96.923 28.2073 97.2933 27.0225 98.0338 26.1338C98.7744 25.2451 99.7964 24.8008 101.085 24.8008C102.374 24.8008 103.381 25.2254 104.057 26.0795C104.733 26.9336 105.044 28.1728 105 29.802V29.807ZM102.931 28.938C102.931 27.0916 102.29 26.1683 101.011 26.1683C100.335 26.1683 99.8161 26.4399 99.4508 26.983C99.0558 27.5754 98.8682 28.4345 98.8929 29.5552L102.931 28.938Z" fill="#FCFCFA"/>
+<path d="M112.593 31.9398C112.593 32.7593 112.272 33.4604 111.635 34.038C110.994 34.6156 110.154 34.9069 109.118 34.9069C108.007 34.9069 107.103 34.6749 106.417 34.2009L106.995 32.7889C107.469 33.1641 108.076 33.3518 108.826 33.3518C109.271 33.3518 109.636 33.2234 109.912 32.9617C110.189 32.7001 110.327 32.3742 110.327 31.9743C110.327 31.5744 110.214 31.2436 110.001 31.0067C109.784 30.7697 109.414 30.5574 108.895 30.3648C107.409 29.7971 106.664 28.8837 106.664 27.6297C106.664 26.8299 106.95 26.1585 107.523 25.6154C108.096 25.0723 108.841 24.8008 109.759 24.8008C110.747 24.8008 111.591 25.0279 112.292 25.492L111.749 26.7756C111.305 26.4152 110.786 26.2325 110.194 26.2325C109.759 26.2325 109.419 26.356 109.172 26.6028C108.925 26.8497 108.802 27.1558 108.802 27.5162C108.802 28.158 109.285 28.6714 110.248 29.0565C111.803 29.6835 112.583 30.6463 112.583 31.9348L112.593 31.9398Z" fill="#FCFCFA"/>
+<path d="M51.2668 18.1561H49.8597V13.7424C49.8597 13.0463 49.4845 12.7007 48.739 12.7007C48.3885 12.7007 48.0626 12.7599 47.7713 12.8735V18.1561H46.3643V12.2662C47.0011 11.9651 47.8158 11.812 48.7982 11.812C49.6671 11.812 50.309 12.0046 50.7237 12.3896C51.0841 12.7155 51.2668 13.1549 51.2668 13.7177V18.1561Z" fill="#FCFCFA"/>
+<path d="M54.2983 10.1576C54.2983 10.3501 54.2242 10.5131 54.0712 10.6513C53.9181 10.7895 53.7355 10.8537 53.5232 10.8537C53.3109 10.8537 53.1282 10.7846 52.9752 10.6513C52.8221 10.5131 52.748 10.3551 52.748 10.1576C52.748 9.96012 52.8221 9.80214 52.9752 9.6639C53.1282 9.52566 53.3109 9.45654 53.5232 9.45654C53.7355 9.45654 53.9231 9.52566 54.0712 9.65896C54.2242 9.79226 54.2983 9.96012 54.2983 10.1625V10.1576ZM54.2242 18.1606H52.8172V11.93H54.2242V18.1606Z" fill="#FCFCFA"/>
+<path d="M60.6421 11.9294L58.6426 18.16H57.2997L55.2657 11.9294H56.7665L57.8675 15.9482C57.9514 16.2494 58.0008 16.5357 58.0156 16.8023H58.0403C58.0798 16.5801 58.1341 16.2938 58.1983 15.9482L59.319 11.9294H60.6421Z" fill="#FCFCFA"/>
+<path d="M66.541 15.0003L62.7296 15.5533C62.8481 16.7085 63.4109 17.2862 64.4279 17.2862C65.0253 17.2862 65.5487 17.1726 65.9979 16.9455L66.3336 17.8342C65.8004 18.1255 65.1191 18.2736 64.2798 18.2736C63.3862 18.2736 62.6802 17.9922 62.1618 17.4293C61.6434 16.8665 61.3867 16.0667 61.3867 15.025C61.3867 13.9833 61.6237 13.2279 62.0977 12.6651C62.5716 12.0973 63.2184 11.8159 64.0429 11.8159C64.8673 11.8159 65.5042 12.0875 65.9387 12.6305C66.3731 13.1736 66.5706 13.9635 66.541 15.0003ZM65.2277 14.4474C65.2277 13.2674 64.818 12.6799 63.9984 12.6799C63.564 12.6799 63.2332 12.8527 63.0011 13.1983C62.7493 13.5735 62.6309 14.1215 62.6457 14.8374L65.2277 14.4424V14.4474Z" fill="#FCFCFA"/>
+<path d="M70.827 11.8217L70.5456 12.8536C70.3382 12.7845 70.121 12.7499 69.8988 12.7499C69.6273 12.7499 69.4051 12.7993 69.2274 12.898V18.156H67.8203V12.2562C68.5066 11.9254 69.5088 11.7773 70.827 11.8168V11.8217Z" fill="#FCFCFA"/>
+<path d="M75.3197 16.3684C75.3197 16.8917 75.1124 17.341 74.7026 17.7112C74.2928 18.0815 73.7596 18.2691 73.098 18.2691C72.3871 18.2691 71.8144 18.1161 71.375 17.8149L71.7453 16.9164C72.0464 17.1534 72.4365 17.2768 72.9154 17.2768C73.2017 17.2768 73.4288 17.1929 73.6065 17.025C73.7843 16.8621 73.8732 16.6498 73.8732 16.3931C73.8732 16.1363 73.804 15.924 73.6658 15.7759C73.5276 15.6278 73.2906 15.4896 72.9598 15.3661C72.0119 15.0057 71.5379 14.4232 71.5379 13.6234C71.5379 13.1149 71.7206 12.6853 72.0859 12.3397C72.4513 11.9941 72.9252 11.8164 73.5127 11.8164C74.1447 11.8164 74.6828 11.9645 75.1321 12.2558L74.7865 13.0754C74.5002 12.8433 74.1694 12.7298 73.7942 12.7298C73.5127 12.7298 73.2955 12.8088 73.1375 12.9667C72.9795 13.1247 72.9006 13.3173 72.9006 13.5493C72.9006 13.9591 73.2066 14.2849 73.8238 14.5318C74.8161 14.9317 75.3148 15.5439 75.3148 16.3733L75.3197 16.3684Z" fill="#FCFCFA"/>
+<path d="M78.0748 10.1576C78.0748 10.3501 77.9958 10.5131 77.8477 10.6513C77.6996 10.7895 77.512 10.8537 77.2997 10.8537C77.0874 10.8537 76.9047 10.7846 76.7517 10.6513C76.5986 10.5131 76.5246 10.3551 76.5246 10.1576C76.5246 9.96012 76.5986 9.80214 76.7517 9.6639C76.9047 9.52566 77.0824 9.45654 77.2997 9.45654C77.5169 9.45654 77.6996 9.52566 77.8477 9.65896C77.9958 9.79226 78.0748 9.96012 78.0748 10.1625V10.1576ZM78.0007 18.1606H76.5937V11.93H78.0007V18.1606Z" fill="#FCFCFA"/>
+<path d="M84.3976 17.8202C83.8594 18.1214 83.1337 18.2695 82.2253 18.2695C81.3168 18.2695 80.596 17.993 80.0875 17.4351C79.579 16.8822 79.3223 16.1071 79.3223 15.1098C79.3223 14.1125 79.579 13.3127 80.0875 12.7203C80.5763 12.1476 81.2378 11.8662 82.0525 11.8662C82.4129 11.8662 82.7288 11.9056 82.9905 11.9846V9.47168H84.3976V17.8202ZM82.9905 17.2278V12.7449C82.8078 12.6906 82.6005 12.661 82.3684 12.661C81.2724 12.661 80.7244 13.4509 80.7244 15.0308C80.7244 16.6107 81.2378 17.366 82.2598 17.366C82.6005 17.366 82.8424 17.3216 82.9856 17.2278H82.9905Z" fill="#FCFCFA"/>
+<path d="M90.3964 17.8199C89.8336 18.1211 89.0832 18.2692 88.1451 18.2692C86.4517 18.2692 85.6025 17.6372 85.6025 16.3734C85.6025 15.6229 85.9481 15.0552 86.6294 14.675C87.1676 14.3837 87.9822 14.1813 89.0782 14.0776V13.7419C89.0782 13.0557 88.6684 12.715 87.844 12.715C87.3256 12.715 86.8072 12.8434 86.2839 13.0952L85.9629 12.2855C86.6097 11.9695 87.3206 11.8115 88.1007 11.8115C89.6312 11.8115 90.3964 12.5274 90.3964 13.9591V17.8199ZM89.0782 17.3163V14.754C88.3426 14.8429 87.8193 14.986 87.5132 15.1835C87.1281 15.4205 86.9355 15.8056 86.9355 16.3388C86.9355 17.109 87.37 17.4941 88.2389 17.4941C88.5697 17.4941 88.8511 17.4348 89.0832 17.3213L89.0782 17.3163Z" fill="#FCFCFA"/>
+<path d="M96.7413 17.8202C96.2032 18.1214 95.4774 18.2695 94.569 18.2695C93.6606 18.2695 92.9398 17.993 92.4313 17.4351C91.9227 16.8822 91.666 16.1071 91.666 15.1098C91.666 14.1125 91.9227 13.3127 92.4313 12.7203C92.925 12.1476 93.5816 11.8662 94.3962 11.8662C94.7566 11.8662 95.0676 11.9056 95.3343 11.9846V9.47168H96.7413V17.8202ZM95.3343 17.2278V12.7449C95.1516 12.6906 94.9393 12.661 94.7122 12.661C93.6161 12.661 93.0681 13.4509 93.0681 15.0308C93.0681 16.6107 93.5816 17.366 94.6085 17.366C94.9442 17.366 95.1911 17.3216 95.3343 17.2278Z" fill="#FCFCFA"/>
+<path d="M39.5859 9.48633H41.0868V16.1859C41.0868 16.9215 41.4818 17.2918 42.2766 17.2918C42.6518 17.2918 42.9974 17.2276 43.3085 17.1091V9.48633H44.8044V17.7559C44.1231 18.0719 43.2591 18.2348 42.2124 18.2348C41.2892 18.2348 40.603 18.0324 40.1636 17.6226C39.7785 17.277 39.5859 16.808 39.5859 16.2106V9.48633Z" fill="#FCFCFA"/>
+</svg>
+        <span class="nb-divider" aria-hidden="true"></span>
+        <span class="nb-unit" id="hdrTitle">Actividad práctica DSIT</span>
+      </button>
+      <div class="nb-timer" id="timer"></div>
+    </div>
+    <div class="tbar" aria-hidden="true"><b id="tbarFill"></b></div>
+  </div>
+  <nav class="gstep" id="gstep" aria-label="Progreso de la actividad" hidden>
+    <div class="wrap"><ol class="gs-list" id="gsList"></ol><p class="gs-cur" id="gsCur" aria-hidden="true"></p></div>
+  </nav>
+  <span id="sync" class="sr" aria-live="polite"></span>
+</header>
+<main id="app" tabindex="-1"></main>
+<div id="toastHost" aria-live="polite"></div>
+<div id="dlgHost"></div>
+
+<script>
+/* =========================================================
+   CONTENIDO (editable sin tocar la lógica)
+   ========================================================= */
+const MESAS = [
+  { id:1, etapa:"Recién llega", etapaKey:"recien", titulo:"Citas de cartera dentro de Salesforce",
+    sub:"Dirección Financiera · ID 3357",
+    caso:"Con el propósito de alinearnos con la política de servicio al estudiante de la Universidad, desde la Dirección Financiera buscamos canalizar las solicitudes relacionadas con el área de cartera a través de un único punto de atención para los estudiantes. En este sentido, agradecemos se pueda evaluar la posibilidad de incluir, dentro de las solicitudes gestionadas en Salesforce, la opción de agendamiento de citas mediante Bookeau, asignadas a las especialistas de acuerdo con las líneas de crédito que tiene a su cargo cada una.",
+    area:"Dirección Financiera · Coordinación de Cartera",
+    asistieron:"Líder de cartera, una especialista y un analista de DSIT",
+    notas:[
+      "Hoy los estudiantes nos escriben al correo de cartera, llaman o vienen a la ventanilla. Muchas veces no saben con quién hablar y terminan escribiéndole a varias personas por lo mismo.",
+      "Somos cuatro especialistas y cada una maneja líneas de crédito distintas. Cuando un caso le llega a quien no es, se reenvía, y a veces se pierde en el camino.",
+      "En temporada de matrículas recibimos alrededor de 600 solicitudes al mes; el resto del año, unas 200. Atendemos estudiantes de pregrado y de posgrado.",
+      "Las especialistas sienten que pasan más tiempo reenviando correos que resolviendo casos.",
+      "En el buzón de PQR hay quejas de estudiantes porque no les respondimos a tiempo.",
+      "La idea es que el estudiante entre por Salesforce, como ya pasa con otras solicitudes, y desde ahí agende una cita en Bookeau con la especialista de su línea.",
+      "No queremos que el estudiante tenga que crear otra cuenta ni aprender otra plataforma.",
+      "Para las especialistas sí es nuevo: tendrían que manejar su agenda en Bookeau. Una de ellas no está muy convencida.",
+      "La directora financiera está de acuerdo. Todavía no lo hemos conversado con Servicio al Estudiante.",
+      "El equipo conoce la idea en general, pero nadie ha visto cómo funcionaría.",
+      "Lo ideal sería tenerlo para la temporada de matrículas del próximo semestre, en unos cuatro meses."
+    ]},
+  { id:2, etapa:"Ya es iniciativa", etapaKey:"iniciativa", titulo:"Campos de acudiente en matrículas",
+    sub:"Dirección Financiera · ID 2700",
+    caso:"Los estudiantes realizan el proceso de matrículas a través del portal de matrículas y en cada proceso realizan la actualización de sus datos personales y datos de responsables económicos. Descripción: requerimos activar en el portal de matrículas unos campos para diligenciar datos de un acudiente en caso de que el responsable económico sea el mismo estudiante. Objetivo: contribuir a las necesidades de la Universidad, para comunicarnos con una persona distinta al estudiante en caso de requerirlo. Premisas: el desarrollo actual solo permite diligenciar información de estudiante y responsable económico.",
+    area:"Dirección Financiera · Matrículas",
+    asistieron:"Coordinadora de matrículas financieras y un analista de DSIT",
+    notas:[
+      "Cuando un estudiante es su propio responsable económico, solo tenemos sus datos. Si hay un problema, no tenemos a nadie más a quién llamar.",
+      "La idea surgió porque varias veces necesitamos contactar a un familiar y no teníamos ningún dato.",
+      "Serían dos o tres campos opcionales: nombre, teléfono y parentesco del acudiente.",
+      "Aplica sobre todo a estudiantes de posgrado y a algunos de pregrado que se financian solos.",
+      "El portal de matrículas lo usan todos los estudiantes cada semestre, pero estos campos solo los verían quienes son su propio responsable económico.",
+      "Ya lo hablamos con DSIT; parece sencillo porque el formulario ya existe.",
+      "Tenemos dudas sobre el manejo de datos personales de un tercero. Jurídica todavía no lo ha revisado.",
+      "La directora está de acuerdo; Registro aún no conoce la propuesta.",
+      "Las personas de cartera no cambiarían su forma de trabajar: solo tendrían un dato más para consultar.",
+      "Quisiéramos tenerlo para las matrículas del próximo semestre, en unos tres meses."
+    ]},
+  { id:3, etapa:"Ya es iniciativa", etapaKey:"iniciativa", titulo:"Cuentas por cobrar y proyectos",
+    sub:"Dirección Financiera · ID 2150",
+    caso:"Oracle ERP, SIRE, RetailPro, sistema de Parqueaderos, Activos Fijos, Fracttal y Portal FI. Se requiere de forma urgente una mejora a la integración que lleva las transacciones desde el módulo de CxC al módulo de proyectos. Específicamente, cuando un proyecto tiene más de un contrato, se requiere que antes de traer la transacción la integración identifique el contrato al que debe ser registrada esta transacción.",
+    area:"Dirección Financiera · Contabilidad",
+    asistieron:"Jefe de contabilidad, una analista contable y un analista de DSIT",
+    notas:[
+      "Cuando un proyecto tiene más de un contrato, la integración no sabe a cuál cargar la transacción y la deja en el contrato equivocado.",
+      "Hoy el equipo contable revisa a mano cada transacción de esos proyectos y la reclasifica.",
+      "Son tres personas las que hacen esa revisión en cada cierre de mes.",
+      "En el último cierre se reclasificaron cerca de 150 transacciones a mano.",
+      "Nadie fuera de contabilidad y de los directores de proyecto ve este proceso.",
+      "A veces los directores de proyecto reciben reportes con cifras que no cuadran por este error.",
+      "La solución es técnica: que la integración identifique el contrato antes de traer la transacción.",
+      "Cuando quede lista, el equipo contable dejaría de hacer la reclasificación manual.",
+      "Todos los líderes están de acuerdo en que hay que corregirlo.",
+      "Es urgente: queremos que quede antes del cierre fiscal, en un mes."
+    ]},
+  { id:4, etapa:"Ya salió: viene una nueva fase", etapaKey:"salio", titulo:"Parqueadero del edificio SD",
+    sub:"Gerencia de Negocios Institucionales · ID 2253 · Estabilización",
+    caso:"Nombre: implementación sistema de control de parqueadero SD. Solución: debido a la ausencia del control de ingreso y facturación en el parqueadero del edificio SD, es importante implementar un sistema de control de parqueaderos que permita validar autorizaciones de ingreso y facturar adecuadamente el servicio.",
+    area:"Gerencia de Negocios Institucionales",
+    asistieron:"Administrador del parqueadero, jefe de seguridad y un analista de DSIT",
+    notas:[
+      "La primera fase ya funciona: talanqueras y lectura de placas para quienes tienen permiso mensual.",
+      "La nueva fase es para visitantes: que puedan pagar al salir, con tarjeta o en línea, y que la factura se genere sola.",
+      "Hoy el visitante recibe un ticket de papel y paga en una caja que solo abre en horario de oficina.",
+      "En la noche y los fines de semana se forman filas a la salida y el vigilante termina abriendo la talanquera.",
+      "Entran unos 300 visitantes al día, muchos de ellos externos a la Universidad.",
+      "Los vigilantes y la persona de caja tendrían que cambiar lo que hacen: ya no se cobraría en efectivo.",
+      "Al cajero no le ha gustado la idea; siente que su puesto está en riesgo.",
+      "En la primera fase no se le avisó bien a la comunidad y hubo quejas en redes por las talanqueras.",
+      "La Gerencia está de acuerdo; falta alinear con Tesorería el tema de la facturación.",
+      "Quisiéramos tenerlo en dos meses."
+    ]},
+  { id:5, etapa:"En construcción", etapaKey:"construccion", titulo:"Directorio Activo y control de acceso",
+    sub:"Gerencia del Campus · ID 2177 · Construcción y despliegue",
+    caso:"La falta de integración estandarizada entre el Directorio Activo y el Sistema de Control de Acceso genera inconsistencias en la asignación y actualización de roles, lo que obliga a realizar subprocesos manuales para garantizar el acceso correcto. Esta situación afecta la experiencia de la comunidad y, con la implementación del Carné Digital, los errores serán más visibles y críticos para los usuarios.",
+    area:"Gerencia del Campus · Seguridad",
+    asistieron:"Jefe de seguridad, líder de control de acceso y un analista de DSIT",
+    notas:[
+      "Cuando alguien entra, cambia de cargo o sale de la Universidad, su permiso de acceso a los edificios no se actualiza solo.",
+      "Hoy el equipo de seguridad recibe correos de las áreas y actualiza los permisos a mano.",
+      "Hay personas que ya salieron y siguen entrando, y personas nuevas que no pueden entrar el primer día.",
+      "Con el Carné Digital todos los estudiantes, profesores y empleados van a entrar con el celular; un error se va a notar mucho más.",
+      "Hablamos de más de 20.000 personas.",
+      "Ya estamos construyendo la integración con DSIT; la idea es salir junto con el Carné Digital, en unos cinco meses.",
+      "Seguridad, Gestión Humana y Registro tienen que ponerse de acuerdo en quién avisa los cambios. Eso todavía no está definido.",
+      "El equipo de seguridad dejaría de hacer la actualización manual, pero tendría que revisar alertas nuevas.",
+      "No tenemos un registro de cuántos errores de acceso hay al mes.",
+      "Si el primer día alguien no puede entrar a su edificio, eso va a llegar a redes."
+    ]},
+  { id:6, etapa:"Recién llega", etapaKey:"recien", titulo:"Tienda y ediciones Uniandes",
+    sub:"Gerencia de Negocios Institucionales · ID 2255",
+    caso:"Se requiere la implementación de una nueva plataforma de gestión para la Tienda y Librería Uniandes, que modernice la administración de inventarios, la facturación y la integración con otros sistemas (ERP y e-commerce).",
+    area:"Gerencia de Negocios Institucionales",
+    asistieron:"Administradora de la Tienda, coordinador de la Librería y un analista de DSIT",
+    notas:[
+      "Hoy la Tienda y la Librería manejan el inventario en hojas de Excel distintas y en un sistema viejo que no se conecta con nada.",
+      "Cuando se vende en línea, alguien tiene que descontar el inventario a mano. A veces vendemos productos que ya no hay.",
+      "La facturación se hace aparte, y al final del mes no cuadra con contabilidad.",
+      "Trabajamos 12 personas entre la tienda, la librería y la bodega.",
+      "Compran estudiantes, egresados, visitantes y público externo; en la tienda en línea hay compradores de todo el país.",
+      "Queremos una plataforma nueva que lo haga todo: inventario, facturación, tienda en línea y conexión con el ERP.",
+      "No hemos mirado si alguna herramienta que ya tiene la Universidad podría servir.",
+      "El equipo lleva años trabajando así; a algunos les preocupa tener que aprender un sistema nuevo.",
+      "La Gerencia lo quiere. Ediciones Uniandes tiene otras prioridades y no se ha sumado a la conversación.",
+      "La tienda es una vitrina de la marca Uniandes: si algo falla, se nota.",
+      "No tenemos fecha; la idea apenas está empezando."
+    ]}
+];
+
+const GUIA = [
+  "¿Qué problema están intentando resolver?",
+  "¿Quién vive ese problema y cómo le afecta?",
+  "¿Cómo lo resuelven hoy?",
+  "¿Qué evidencia tienen de que existe el problema?",
+  "¿Por qué creen que esta solución funcionará?",
+  "Si la tecnología no fuera una opción, ¿cómo lo resolverían?",
+  "¿Cómo sabrán que el problema está resuelto?"
+];
+
+const CUANDO = ["Recién llega","Ya es iniciativa","En construcción","Ya salió"];
+
+const MATRIZ = {
+  exp: { nombre:"Experiencia", color:"var(--exp)", rol:"exp",
+    escala:[{l:"Autogestión",r:"Menos de 24"},{l:"Consultivo",r:"24 a 35"},{l:"Necesario",r:"36 o más"}],
+    cortes:[24,36],
+    crits:[
+      { q:"¿La iniciativa va a crear o cambiar algo que un usuario final vea y use?", ops:[
+        {p:5,d:"No hay nada visible para el usuario final. Es una conexión entre sistemas, una automatización o un cambio interno que ocurre por dentro del sistema."},
+        {p:10,d:"Cambia parcialmente algo que el usuario ya ve (campos nuevos, ajustes a una pantalla existente, una opción adicional dentro de un menú)."},
+        {p:15,d:"Se crea una herramienta nueva o se rediseña a fondo una existente, destinada a estudiantes, empleados o comunidad."}]},
+      { q:"¿A cuántas personas impacta y qué tan variados son los perfiles de las personas impactadas?", ops:[
+        {p:3,d:"Toca a un equipo pequeño y bastante uniforme: una oficina, un grupo de trabajo, una unidad administrativa específica. Menos de 50 personas, y todas hacen aproximadamente lo mismo."},
+        {p:6,d:"Toca a varias áreas distintas, o a una facultad o dirección de tamaño medio. Hay diversidad pero todavía es público interno. Entre 50 y 1.000 personas, con perfiles distintos."},
+        {p:9,d:"Toca a una comunidad amplia: toda la población estudiantil, todos los colaboradores, o público externo (aspirantes, egresados, padres de familia). Más de 1.000 personas, o cualquier número de público externo."}]},
+      { q:"¿Cambia el camino que recorre el usuario final para hacer su tarea?", ops:[
+        {p:4,d:"El usuario hace los mismos pasos que antes, en el mismo orden. Solo cambia un ajuste visual o de configuración, sin que la persona tenga que aprender algo nuevo."},
+        {p:8,d:"El usuario sigue reconociendo el proceso, pero se encuentra con pasos nuevos, decisiones nuevas o pantallas reorganizadas en alguna parte del camino."},
+        {p:12,d:"El camino es nuevo o se rediseña desde cero. El usuario aprende a hacer algo que antes no hacía, o lo hace de una forma muy distinta."}]},
+      { q:"De todo el esfuerzo de esta iniciativa, ¿cuánto es trabajo de pensar la experiencia del usuario y cuánto es trabajo técnico de sistemas?", ops:[
+        {p:3,d:"Casi todo el trabajo es técnico: conexiones, automatizaciones, cálculos, configuración de sistemas."},
+        {p:6,d:"El trabajo se reparte de manera relativamente equilibrada. Hay diseño de pantallas, pero apoyado en una herramienta que ya las trae, por ejemplo: Salesforce, HCM, Power BI, Bookeau."},
+        {p:9,d:"La mayor parte del esfuerzo está en pensar cómo va a usar la persona el producto, no en armarlo técnicamente."}]},
+      { q:"Mide cuán visible es esto institucionalmente.", ops:[
+        {p:2,d:"Operativo interno: es de uso interno y restringido."},
+        {p:4,d:"Visibilidad media: es visible para varias áreas o para una parte amplia de la organización."},
+        {p:6,d:"De cara al usuario externo o al usuario final."}]},
+      { q:"¿Sabemos exactamente qué hay que resolver y para quién, o todavía hay que investigar antes de proponer una solución?", ops:[
+        {p:3,d:"El problema está claro, el usuario final está identificado y la solución técnica está prácticamente definida."},
+        {p:6,d:"Sabemos cuál es el problema y a quién afecta, pero todavía no está claro cuál es la mejor forma de resolverlo."},
+        {p:9,d:"El problema todavía no está bien definido. Necesitamos hablar con usuarios, entender qué hacen hoy, qué les duele, y a partir de ahí proponer."}]}
+    ]},
+  cam: { nombre:"Gestión del Cambio", color:"var(--cam)", rol:"cam",
+    escala:[{l:"Autogestión",r:"Menos de 24"},{l:"Consultivo",r:"24 a 35"},{l:"Necesario",r:"36 o más"}],
+    cortes:[24,36],
+    crits:[
+      { q:"¿Qué tanto cambia la forma de trabajar de las personas?", ops:[
+        {p:8,d:"Sin cambio: ajuste técnico sin impacto en cómo trabaja la gente."},
+        {p:16,d:"Cambio moderado: pasos nuevos o un rol parcialmente modificado."},
+        {p:24,d:"Cambio profundo: nueva forma de trabajar, roles o procesos redefinidos."}]},
+      { q:"¿Qué tan probable es que se resistan o les cueste adoptarlo?", ops:[
+        {p:7,d:"Adopción natural, sin afectación humana visible."},
+        {p:14,d:"Posible resistencia moderada o incertidumbre en algunos grupos."},
+        {p:21,d:"Alto riesgo: cambio masivo, sensible o con antecedentes de resistencia."}]},
+      { q:"¿Qué nivel de alineación existe entre los líderes involucrados?", ops:[
+        {p:5,d:"No se identifican diferencias de criterio entre los líderes; existe alineación frente a la iniciativa."},
+        {p:10,d:"Existen diferencias puntuales que requieren acuerdos entre algunos líderes o unidades."},
+        {p:15,d:"Existen diferencias significativas que requieren alinear a varios líderes, sponsors o comités para avanzar."}]}
+    ]},
+  com: { nombre:"Posicionamiento y Comunicaciones", color:"var(--com)", rol:"com",
+    escala:[{l:"Autogestión",r:"8 a 20"},{l:"Consultivo",r:"21 a 36"},{l:"Necesario",r:"37 o más"}],
+    cortes:[21,37],
+    crits:[
+      { q:"¿Cuál es el principal resultado que espera con comunicaciones?", ops:[
+        {p:1,d:"Informar / divulgar: busca dar a conocer información sobre una iniciativa, actividad, cambio o decisión, sin requerir necesariamente una acción específica de la audiencia."},
+        {p:3,d:"Posicionar, o accionar / ejecutar: busca generar reconocimiento, comprensión o recordación, o movilizar a la audiencia hacia una acción concreta, como participar, utilizar una herramienta, cumplir un proceso o tomar una decisión."},
+        {p:5,d:"Mitigar una situación sensible: la comunicación busca prevenir, contener o reducir posibles impactos negativos, confusiones, resistencias o riesgos asociados con la iniciativa."}]},
+      { q:"¿En qué etapa está el proyecto?", ops:[
+        {p:3,d:"Planeación con actividades definidas: la iniciativa ya tiene objetivos, actividades o responsables definidos y se encuentra en proceso de preparación para su ejecución."},
+        {p:4,d:"Listo para implementación o ejecución: la iniciativa está suficientemente estructurada para comenzar a ejecutarse y requiere apoyo comunicacional para acompañar su puesta en marcha."},
+        {p:5,d:"Idea o formulación (aún se define): la iniciativa está en una etapa inicial: se está explorando, definiendo o estructurando y aún no cuenta con un plan de ejecución completamente definido."}]},
+      { q:"¿Cuál es la audiencia principal?", ops:[
+        {p:2,d:"Estudiantes de educación continua."},
+        {p:3,d:"Profesores de cátedra. Audiencia externa."},
+        {p:4,d:"Administrativos tácticos u operativos (jefes, líderes, tomadores de decisiones). Estudiantes de posgrado. Equipo interno."},
+        {p:5,d:"Administrativos estratégicos (directores, vicerrectores, decanos). Profesores de planta. Estudiantes de pregrado."}]},
+      { q:"¿Cuántas personas se espera impactar?", ops:[
+        {p:1,d:"De 1 a 20 personas: la comunicación está dirigida a un grupo reducido y específico, generalmente asociado a un equipo, área o grupo de trabajo."},
+        {p:3,d:"De 21 a 100 personas: la comunicación alcanza a un grupo mediano y puede requerir una gestión comunicacional más estructurada."},
+        {p:5,d:"Más de 100 personas: la comunicación tiene un alcance amplio y puede requerir planeación de canales, mensajes y acciones para garantizar una llegada efectiva."}]},
+      { q:"¿Qué conoce hoy la audiencia y qué impacto tiene?", ops:[
+        {p:1,d:"No la conoce y bajo impacto."},
+        {p:2,d:"La conoce parcialmente y bajo impacto."},
+        {p:3,d:"La conoce e impacta parcialmente."},
+        {p:4,d:"La conoce y alto impacto."},
+        {p:5,d:"No la conoce y alto impacto."}]},
+      { q:"Si se comunica mal, ¿qué riesgo reputacional hay?", ops:[
+        {p:1,d:"No la conoce y tiene bajo impacto: la audiencia no tiene conocimiento de la iniciativa y esta no genera cambios relevantes en sus actividades o experiencia."},
+        {p:2,d:"La conoce parcialmente y tiene bajo impacto: la audiencia tiene algún conocimiento sobre la iniciativa, pero su relación o afectación frente a ella es limitada."},
+        {p:3,d:"La conoce e impacta parcialmente: la audiencia conoce la iniciativa y esta genera algunos cambios o efectos en sus actividades, procesos o experiencia."},
+        {p:4,d:"La conoce y tiene alto impacto: la audiencia comprende la iniciativa y esta genera cambios relevantes en sus actividades, procesos, responsabilidades o experiencia."},
+        {p:5,d:"No la conoce y tiene alto impacto: la audiencia aún desconoce la iniciativa, pero esta puede generar cambios significativos en sus actividades, procesos o experiencia."}]},
+      { q:"¿Qué tan involucrado ha estado el equipo dueño de la iniciativa?", ops:[
+        {p:1,d:"Tiene total conocimiento de la iniciativa: el equipo conoce claramente la iniciativa, sus objetivos, alcance y responsabilidades, por lo que la necesidad de comunicación básica hacia este grupo es menor."},
+        {p:3,d:"Tiene nociones parciales: el equipo tiene algún conocimiento sobre la iniciativa, pero todavía existen vacíos de información, alineación o comprensión."},
+        {p:5,d:"Tiene total desconocimiento: el equipo responsable o directamente relacionado con la iniciativa aún no conoce suficientemente su propósito, alcance o implicaciones."}]},
+      { q:"¿Con cuánta anticipación se solicita el apoyo?", ops:[
+        {p:1,d:"A un mes para el lanzamiento: el lanzamiento es próximo y existe poco tiempo para planear, producir y ejecutar los requerimientos comunicacionales necesarios."},
+        {p:3,d:"Entre 2 y 6 meses: existe un margen de tiempo intermedio que permite planear y desarrollar los requerimientos comunicacionales con anticipación."},
+        {p:5,d:"De 6 meses en adelante: existe un margen amplio de tiempo que permite planear, producir y ejecutar una estrategia comunicacional integral."}]}
+    ]}
+};
+const TEAMS = ["exp","cam","com"];
+
+const TEAM_ICON = {exp:"stars", cam:"groups", com:"campaign"};
+/* Títulos cortos de las opciones de la matriz. Si una opción no aparece aquí,
+   el título se toma del texto antes de los dos puntos de su descripción. */
+const OPT_TITLES = {
+  "exp-0":["Nada visible","Ajuste a algo existente","Herramienta nueva o rediseño"],
+  "exp-1":["Equipo pequeño","Varias áreas","Comunidad amplia"],
+  "exp-2":["Mismo camino","Pasos nuevos","Camino nuevo"],
+  "exp-3":["Casi todo técnico","Trabajo equilibrado","Sobre todo experiencia"],
+  "exp-4":[null,null,"Visibilidad alta"],
+  "exp-5":["Problema y solución claros","Falta definir la solución","Falta entender el problema"],
+  "cam-1":["Adopción natural","Resistencia moderada",null],
+  "cam-2":["Líderes alineados","Diferencias puntuales","Diferencias significativas"],
+  "com-0":["Informar","Posicionar o movilizar","Mitigar una situación sensible"],
+  "com-1":["Planeación definida","Listo para ejecutar","Idea o formulación"],
+  "com-2":["Educación continua","Cátedra y público externo","Nivel táctico","Nivel estratégico"],
+  "com-4":["No la conoce, bajo impacto","La conoce en parte, bajo impacto","La conoce, impacto parcial","La conoce, alto impacto","No la conoce, alto impacto"],
+  "com-5":["Riesgo muy bajo","Riesgo bajo","Riesgo medio","Riesgo alto","Riesgo muy alto"],
+  "com-6":["Conoce la iniciativa","Conocimiento parcial","Desconoce la iniciativa"]
+};
+const TITLE_ONLY = {"com-4":true};
+function optParts(team, ci, oi, d){
+  const k = `${team}-${ci}`, manual = (OPT_TITLES[k] || [])[oi];
+  const m = d.match(/^([^:]{3,70}):\s*([\s\S]+)$/);
+  const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+  if(manual) return { t: manual, d: TITLE_ONLY[k] ? "" : (m ? cap(m[2]) : d) };
+  if(m) return { t: m[1], d: cap(m[2]) };
+  return { t: "", d };
+}
+const TOTAL_SEC = 20 * 60;
+const SCREENS = [
+  {k:"inicio", n:"1", label:"Bienvenida"},
+  {k:"caso", n:"2", label:"Caso"},
+  {k:"notas", n:"3", label:"Preguntas clave"},
+  {k:"tarjeta", n:"4", label:"Evaluación"},
+  {k:"hoja7", n:"5", label:"Decisión"},
+  {k:"presentacion", n:"6", label:"Presentación"},
+  {k:"facilitador", n:"", label:"Facilitador"}
+];
+
+/* =========================================================
+   ESTADO Y ALMACENAMIENTO
+   ========================================================= */
+const KEY = "dsit-actividad-v3";
+const mem = {};
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k] ?? null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+};
+function newTimer(){ return {remaining:TOTAL_SEC, running:false, endAt:null, done:false}; }
+function blank(){
+  return { v:3, mesa:null, screen:"inicio", team:"exp", max:0,
+    resp:{}, claves:[], ans:{exp:{},cam:{},com:{}}, qtext:{}, timer:newTimer() };
+}
+function load(){
+  try{ const raw = store.get(KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v === 3) return Object.assign(blank(), s); } }catch(e){}
+  return blank();
+}
+let S = load();
+let UI = {menu:false, adding:false, draft:"", acc:false, editPres:false};
+function save(){ store.set(KEY, JSON.stringify(S)); scheduleSync(); }
+
+/* =========================================================
+   CAPACIDADES DE LA VERSIÓN PUBLICADA (si no existen, todo funciona local)
+   ========================================================= */
+let DB = null, DL = null, LIVE = null;
+let syncTimer = null, syncing = false, lastSynced = null;
+function setSync(msg){ const el = document.getElementById("sync"); if(el) el.textContent = msg || ""; }
+function scheduleSync(){ if(!DB || !S.mesa) return; clearTimeout(syncTimer); syncTimer = setTimeout(doSync, 1500); }
+async function doSync(){
+  if(!DB || !S.mesa) return;
+  if(syncing){ syncTimer = setTimeout(doSync, 800); return; }
+  const p = resultObject(), js = JSON.stringify(p);
+  if(js === lastSynced) return;
+  syncing = true;
+  try{
+    await DB.doc("resultados/mesa-" + p.mesa).set(Object.assign({}, p, {actualizado:new Date().toISOString()}));
+    lastSynced = js; setSync("");
+  }catch(e){
+    const code = e && e.code;
+    if(code === "invalid_argument") setSync("Sin permiso para enviar resultados");
+    else { setSync("Sin conexión con el facilitador"); syncTimer = setTimeout(doSync, 5000); }
+  }finally{ syncing = false; }
+}
+(async () => {
+  try{
+    if(!(window.claude && typeof window.claude.use === "function")) return;
+    DL = await window.claude.use("downloads");
+    DB = await window.claude.use("db");
+    if(DB){
+      DB.collection("resultados").onSnapshot(snap => {
+        LIVE = {};
+        snap.docs.forEach(d => { const v = d.data(); if(v && v.mesa) LIVE[v.mesa] = v; });
+        if(S.screen === "facilitador") render();
+      }, () => { LIVE = null; });
+      scheduleSync();
+      if(S.screen === "inicio") render();
+    }
+  }catch(e){}
+})();
+
+/* =========================================================
+   CÁLCULOS
+   ========================================================= */
+const mesa = () => MESAS.find(m => m.id === S.mesa);
+const maxPts = c => Math.max(...c.ops.map(o => o.p));
+function nivelIdx(team, pts){ const [a,b] = MATRIZ[team].cortes; return pts < a ? 0 : (pts < b ? 1 : 2); }
+function scoreTeam(team){
+  const crits = MATRIZ[team].crits; let pts = 0, done = 0, q = 0;
+  crits.forEach((c,ci) => {
+    const a = S.ans[team][ci];
+    if(a === undefined || a === null) return;
+    done++;
+    if(a === "?"){ q++; pts += maxPts(c); } else pts += c.ops[a].p;
+  });
+  const idx = nivelIdx(team, pts);
+  return { pts, done, total:crits.length, q, complete: done === crits.length, idx, nivel: MATRIZ[team].escala[idx].l };
+}
+function unknownQuestions(){
+  const out = [];
+  TEAMS.forEach(t => MATRIZ[t].crits.forEach((c,ci) => {
+    if(S.ans[t][ci] === "?") out.push({ team:t, ci, key:`${t}-${ci}`, criterio:c.q, text:(S.qtext[`${t}-${ci}`]||"").trim() });
+  }));
+  return out;
+}
+const answered = () => GUIA.filter((_,i) => (S.resp[i]||"").trim()).length;
+const totalMarked = () => TEAMS.reduce((n,t) => n + Object.keys(S.ans[t]).length, 0);
+const TOTAL_CRITS = TEAMS.reduce((n,t) => n + MATRIZ[t].crits.length, 0);
+const claves = () => (S.claves || []).filter(x => typeof x === "string" && x.trim());
+function areaQuestionTexts(){ return unknownQuestions().map(q => q.text).filter(Boolean).concat(claves()); }
+function resultObject(){
+  const m = mesa(), equipos = {};
+  TEAMS.forEach(t => { const s = scoreTeam(t); equipos[t] = {nombre:MATRIZ[t].nombre, pts:s.pts, idx:s.idx, nivel:s.nivel, completo:s.complete, marcados:s.done, total:s.total}; });
+  return { tipo:"dsit-resultado", version:2, mesa:m.id, titulo:m.titulo, etapa:m.etapa, etapaKey:m.etapaKey, equipos,
+    respondidas: answered(), clave: GUIA.map((g,i) => ({pregunta:g, respuesta:(S.resp[i]||"").trim()})),
+    preguntas: areaQuestionTexts(), respuestas:S.ans,
+    progreso:{ marcados: totalMarked(), total: TOTAL_CRITS, tiempoTerminado: S.timer.done } };
+}
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = sec => { sec = Math.max(0, sec|0); return `${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`; };
+const icon = (name, label) => `<span class="ms" ${label ? `role="img" aria-label="${esc(label)}"` : 'aria-hidden="true"'}>${name}</span>`;
+function lvClass(i,n){ const r = n > 1 ? i/(n-1) : 0; return r < .34 ? "lv-low" : (r < .67 ? "lv-mid" : "lv-high"); }
+function setPath(obj, path, val){ const p = path.split("."); let o = obj; for(let i=0;i<p.length-1;i++) o = o[p[i]]; o[p[p.length-1]] = val; }
+const slug = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+let toastTimer;
+function toast(msg, actionLabel, actionAttr){
+  const host = document.getElementById("toastHost");
+  host.innerHTML = `<div class="toast" role="status"><span>${esc(msg)}</span>${actionLabel ? `<button class="btn small" data-act="${actionAttr}">${esc(actionLabel)}</button>` : ""}<button class="x" data-act="toast-close" aria-label="Cerrar aviso">${icon("close")}</button></div>`;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => host.innerHTML = "", 9000);
+}
+function ask(msg, okLabel){
+  return new Promise(res => {
+    const host = document.getElementById("dlgHost"), prev = document.activeElement;
+    host.innerHTML = `<div class="dlg-bg"><div class="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlgMsg">
+      <p id="dlgMsg">${esc(msg)}</p>
+      <div class="actions"><button class="btn small" id="dlgNo">Cancelar</button><button class="btn small primary" id="dlgOk">${esc(okLabel || "Sí, continuar")}</button></div>
+    </div></div>`;
+    const done = v => { host.innerHTML = ""; if(prev && prev.focus) try{ prev.focus({preventScroll:true}); }catch(e){} res(v); };
+    document.getElementById("dlgNo").onclick = () => done(false);
+    document.getElementById("dlgOk").onclick = () => done(true);
+    host.querySelector(".dlg-bg").addEventListener("keydown", e => { if(e.key === "Escape") done(false); });
+    document.getElementById("dlgOk").focus();
+  });
+}
+function bell(){
+  try{
+    const ctx = Music.ctx || new (window.AudioContext || window.webkitAudioContext)();
+    Music.ctx = ctx; if(ctx.state === "suspended") ctx.resume();
+    const out = ctx.createGain(); out.gain.value = .6; out.connect(ctx.destination);
+    const partials = [[1,1],[2,.55],[2.76,.4],[5.4,.22],[8.93,.12]];
+    [0, 1.4, 2.8].forEach(t0 => {
+      const t = ctx.currentTime + t0;
+      partials.forEach(([r,a]) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = 660 * r;
+        g.gain.setValueAtTime(.0001, t);
+        g.gain.exponentialRampToValueAtTime(.35 * a, t + .01);
+        g.gain.exponentialRampToValueAtTime(.0001, t + 2.6 / Math.sqrt(r));
+        o.connect(g); g.connect(out); o.start(t); o.stop(t + 2.8);
+      });
+    });
+  }catch(e){}
+  if(navigator.vibrate) try{ navigator.vibrate([300,150,300,150,300]); }catch(e){}
+}
+async function saveFile(name, data, type){
+  if(DL){
+    try{ await DL.save({filename:name, data}); return true; }
+    catch(e){ if(!e || e.code !== "declined") toast("No se pudo descargar el archivo en esta vista."); return false; }
+  }
+  try{
+    const blob = data instanceof Blob ? data : new Blob([data], {type});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    return true;
+  }catch(e){ toast("No se pudo descargar el archivo."); return false; }
+}
+
+/* =========================================================
+   MÚSICA DE CONCENTRACIÓN (generada en el navegador, sin archivos)
+   ========================================================= */
+const Music = {
+  ctx:null, out:null, voices:[], noise:null, loop:null, playing:false, step:0,
+  CHORDS:[[220.00,261.63,329.63,392.00],[174.61,220.00,261.63,329.63],[130.81,196.00,261.63,329.63],[146.83,220.00,261.63,349.23]],
+  start(){
+    if(this.playing) return;
+    try{
+      if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = this.ctx; if(ctx.state === "suspended") ctx.resume();
+      const out = ctx.createGain(); out.gain.value = .0001; out.connect(ctx.destination);
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900; lp.Q.value = .3; lp.connect(out);
+      this.voices = this.CHORDS[0].map((f,i) => {
+        const g = ctx.createGain(); g.gain.value = .06; g.connect(lp);
+        const o1 = ctx.createOscillator(); o1.type = "sine"; o1.frequency.value = f; o1.connect(g);
+        const o2 = ctx.createOscillator(); o2.type = "triangle"; o2.frequency.value = f; o2.detune.value = 7;
+        const g2 = ctx.createGain(); g2.gain.value = .35; o2.connect(g2); g2.connect(g);
+        const lfo = ctx.createOscillator(); lfo.frequency.value = .05 + i*.03;
+        const lg = ctx.createGain(); lg.gain.value = .025; lfo.connect(lg); lg.connect(g.gain);
+        [o1,o2,lfo].forEach(o => o.start());
+        return {o1,o2,lfo};
+      });
+      const len = ctx.sampleRate * 4, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+      let last = 0; for(let i=0;i<len;i++){ const w = Math.random()*2 - 1; last = (last + .02*w)/1.02; d[i] = last*3.5; }
+      const n = ctx.createBufferSource(); n.buffer = buf; n.loop = true;
+      const ng = ctx.createGain(); ng.gain.value = .1; n.connect(ng); ng.connect(out); n.start();
+      this.noise = n; this.out = out; this.step = 0;
+      out.gain.exponentialRampToValueAtTime(.5, ctx.currentTime + 3);
+      this.loop = setInterval(() => this.next(), 12000);
+      this.playing = true;
+    }catch(e){ this.playing = false; toast("No se pudo reproducir la música en este navegador."); }
+    renderTimer();
+  },
+  next(){
+    const ctx = this.ctx; this.step = (this.step + 1) % this.CHORDS.length; const ch = this.CHORDS[this.step];
+    this.voices.forEach((v,i) => { v.o1.frequency.setTargetAtTime(ch[i], ctx.currentTime, 1.5); v.o2.frequency.setTargetAtTime(ch[i], ctx.currentTime, 1.5); });
+  },
+  stop(){
+    if(!this.playing) return;
+    const ctx = this.ctx, out = this.out, voices = this.voices, noise = this.noise;
+    clearInterval(this.loop); this.playing = false;
+    try{
+      out.gain.cancelScheduledValues(ctx.currentTime);
+      out.gain.setValueAtTime(Math.max(out.gain.value, .0001), ctx.currentTime);
+      out.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + 1.2);
+    }catch(e){}
+    setTimeout(() => { try{ voices.forEach(v => { v.o1.stop(); v.o2.stop(); v.lfo.stop(); }); noise.stop(); out.disconnect(); }catch(e){} }, 1400);
+    renderTimer();
+  },
+  toggle(){ this.playing ? this.stop() : this.start(); }
+};
+
+/* =========================================================
+   TIEMPO TOTAL
+   ========================================================= */
+const timerStarted = () => { const T = S.timer; return T.running || T.done || T.remaining < TOTAL_SEC; };
+function startTimer(){ const T = S.timer; if(!T.running && !T.done){ T.running = true; T.endAt = Date.now() + T.remaining*1000; Music.start(); } }
+function timerTick(){
+  const T = S.timer;
+  if(T.running && T.endAt){
+    T.remaining = Math.max(0, Math.ceil((T.endAt - Date.now())/1000));
+    if(T.remaining === 0){
+      T.running = false; T.endAt = null; T.done = true; save(); Music.stop(); bell();
+      toast("Se acabaron los 20 minutos. Es momento de presentar.", "Ir a la presentación", "go:presentacion");
+    }
+  }
+  renderTimer();
+}
+function timerToggle(){
+  const T = S.timer;
+  if(T.done) return;
+  if(T.running){ T.remaining = Math.max(0, Math.ceil((T.endAt - Date.now())/1000)); T.running = false; T.endAt = null; Music.stop(); }
+  else startTimer();
+  save(); renderTimer();
+}
+function renderTimer(){
+  const T = S.timer, el = document.getElementById("timer"), fill = document.getElementById("tbarFill");
+  if(!S.mesa || S.screen === "facilitador"){ el.innerHTML = ""; fill.style.width = "0"; return; }
+  el.innerHTML = `<div class="timer ${(!T.done && T.running && T.remaining <= 60) ? "warn" : ""}" role="timer" aria-label="Tiempo restante">
+    <span class="t-lab">${T.done ? "Tiempo terminado" : "Tiempo"}</span>
+    <span class="t-clock">${fmt(T.remaining)}</span>
+    ${T.done ? "" : `<button class="nb-btn" data-act="timer-toggle" aria-label="${T.running ? "Pausar el tiempo" : "Iniciar el tiempo"}">${icon(T.running ? "pause" : "play_arrow")}</button>`}
+    <button class="nb-btn" data-act="music" aria-pressed="${Music.playing}" aria-label="${Music.playing ? "Pausar la música de concentración" : "Reproducir música de concentración"}">${icon(Music.playing ? "music_note" : "music_off")}</button>
+    <button class="nb-btn" data-act="timer-reset" aria-label="Reiniciar el tiempo">${icon("restart_alt")}</button>
+  </div>`;
+  fill.style.width = `${100 * (1 - T.remaining / TOTAL_SEC)}%`;
+}
+
+/* =========================================================
+   VISTAS
+   ========================================================= */
+const STEP_KEYS = ["inicio","caso","notas","tarjeta","hoja7","presentacion"];
+function renderNav(){
+  const m = mesa(), show = S.screen !== "facilitador";
+  document.getElementById("hdrTitle").innerHTML = m ? `Actividad práctica DSIT<br>Caso ${m.id}` : "Actividad práctica DSIT";
+  const nav = document.getElementById("gstep");
+  nav.hidden = !show;
+  if(!show) return;
+  const cur = STEP_KEYS.indexOf(S.screen), max = Math.max(S.max || 0, cur);
+  const stateOf = i => i === cur ? "active" : (!m && i > 0 ? "pending" : (i <= max ? "success" : "pending"));
+  document.getElementById("gsList").innerHTML = STEP_KEYS.map((k,i) => {
+    const st = stateOf(i), sc = SCREENS.find(x => x.k === k);
+    const prev = i > 0 ? (stateOf(i-1) === "success" ? " after-success" : (stateOf(i-1) === "active" ? " after-active" : "")) : "";
+    const srState = st === "success" ? "completado" : (st === "active" ? "paso actual" : "pendiente");
+    return `<li class="gs-step ${st}${prev}"><button class="gs-btn" data-act="go:${k}" ${st === "active" ? 'aria-current="step"' : ""} ${!m && i > 0 ? "disabled" : ""} aria-label="Paso ${i+1}: ${esc(sc.label)}, ${srState}">
+      <span class="gs-sym" aria-hidden="true">${st === "success" ? icon("check") : i + 1}</span><span class="gs-lab" aria-hidden="true">${esc(sc.label)}</span></button></li>`;
+  }).join("");
+  document.getElementById("gsCur").textContent = cur >= 0 ? `Paso ${cur+1} de ${STEP_KEYS.length} · ${SCREENS.find(x => x.k === S.screen).label}` : "Elijan un paso para continuar";
+}
+
+function vInicio(){
+  const m = mesa();
+  return `<p class="eyebrow">Paso 1 de 6 · Bienvenida</p>
+    <h1>Te damos la bienvenida</h1>
+    <hr class="divider">
+    <p class="lead">En los próximos 20 minutos van a analizar un requerimiento real que llegó a DSIT y a decidir con qué nivel deben participar <strong>Experiencia</strong>, <strong>Gestión del Cambio</strong> y <strong>Posicionamiento y Comunicaciones</strong>. Al final tendrán 5 minutos para presentar su decisión.</p>
+    <h2>Elijan su grupo</h2>
+    <div class="mesas">${MESAS.map(x => `
+      <button class="mesa ${m && m.id === x.id ? "current" : ""}" data-act="mesa:${x.id}">
+        <span class="mesa-top"><span class="num">${x.id}</span>${m && m.id === x.id ? `<span class="chip is-selected">${icon("check")}Su grupo</span>` : ""}</span>
+        <strong>${esc(x.titulo)}</strong>
+        <span class="go">${m && m.id === x.id ? "Continuar" : "Elegir"} ${icon("arrow_forward")}</span>
+      </button>`).join("")}
+    </div>
+    ${DB ? `<div class="actions"><button class="btn tertiary small" data-act="go:facilitador">Ir a la vista del facilitador</button></div>` : ""}`;
+}
+
+function vCaso(){
+  const m = mesa();
+  return `<p class="eyebrow">Paso 2 de 6 · Caso</p>
+    <h1>${esc(m.titulo)}</h1>
+    <hr class="divider">
+    <h2>Así llegó el requerimiento</h2>
+    <blockquote class="quote">«${esc(m.caso)}»</blockquote>
+    <div class="actions">
+      <button class="btn primary" data-act="caso-next">${timerStarted() ? "Continuar a preguntas clave" : "Iniciar el tiempo y continuar"} ${icon("arrow_forward")}</button>
+      ${timerStarted() ? "" : `<span class="meta">El tiempo total es de 20 minutos.</span>`}
+    </div>`;
+}
+
+function vNotas(){
+  const m = mesa(), n = answered();
+  return `<p class="eyebrow">Paso 3 de 6 · Preguntas clave</p>
+    <h1>Preguntas clave</h1>
+    <hr class="divider">
+    <p class="lead">Primero lean lo que contó el área en la conversación. Luego respondan cada pregunta con sus propias palabras. Si las notas no alcanzan para responder alguna, déjenla en blanco: es una señal de lo que todavía hay que preguntarle al área.</p>
+
+    <section class="box" aria-labelledby="h-notas">
+      <h2 id="h-notas">Notas de la primera conversación con el líder funcional</h2>
+      <dl class="facts"><div><dt>Área</dt><dd>${esc(m.area)}</dd></div><div><dt>Participaron</dt><dd>${esc(m.asistieron)}</dd></div></dl>
+      <ul class="notes">${m.notas.map(x => `<li>«${esc(x)}»</li>`).join("")}</ul>
+    </section>
+
+    <section class="section qsec" aria-labelledby="h-preg">
+      <div class="qhead">
+        <h2 id="h-preg">¿Qué pueden responder con las notas?</h2>
+        <div class="progress"><span class="bar"><b id="respBar" style="width:${100*n/GUIA.length}%"></b></span><span id="respCount">${n} de ${GUIA.length} respondidas</span></div>
+      </div>
+      <div class="qs qscroll" tabindex="0" role="region" aria-label="Preguntas clave">${GUIA.map((g,i) => `
+        <div class="qcard ${(S.resp[i]||"").trim() ? "done" : ""}" id="qc-${i}">
+          <div class="qn"><span>Pregunta ${i+1} de ${GUIA.length}</span><span class="ok">${icon("check_circle")} Respondida</span></div>
+          <label class="ql" for="resp-${i}">${esc(g)}</label>
+          <textarea class="field" id="resp-${i}" data-bind="resp.${i}" data-resp="${i}" placeholder="Escriban su respuesta">${esc(S.resp[i]||"")}</textarea>
+        </div>`).join("")}
+      </div>
+    </section>
+    <div class="actions"><button class="btn primary" data-act="go:tarjeta">Continuar a la evaluación ${icon("arrow_forward")}</button></div>`;
+}
+
+function vTarjeta(){
+  const t = S.team, M = MATRIZ[t], sc = scoreTeam(t);
+  const tabs = TEAMS.map(k => { const s = scoreTeam(k), sel = k === t;
+    return `<button class="ttab" role="tab" id="tab-${k}" data-act="team:${k}" aria-selected="${sel}" aria-controls="teampanel" tabindex="${sel ? 0 : -1}">${icon(TEAM_ICON[k])}
+      <span><span class="tt">${esc(MATRIZ[k].nombre)}</span><span class="ts">${s.done} de ${s.total} criterios</span></span></button>`; }).join("");
+  const crits = M.crits.map((c,ci) => {
+    const a = S.ans[t][ci], key = `${t}-${ci}`;
+    const opts = c.ops.map((o,oi) => `
+      <label class="opt ${lvClass(oi, c.ops.length)} ${a === oi ? "sel" : ""}">
+        <input type="radio" id="opt-${t}-${ci}-${oi}" name="ans-${t}-${ci}" value="${oi}" ${a === oi ? "checked" : ""}>
+        ${(p => `<span class="pts">${esc(p.t)}</span>${p.d ? `<span>${esc(p.d)}</span>` : ""}`)(optParts(t, ci, oi, o.d))}
+      </label>`).join("");
+    const unk = `<label class="opt unk lv-unk ${a === "?" ? "sel" : ""}">
+        <input type="radio" id="opt-${t}-${ci}-q" name="ans-${t}-${ci}" value="?" ${a === "?" ? "checked" : ""}>
+        <span class="pts">Aún no lo sabemos</span><span>Quedará como pregunta para el equipo de ${esc(M.nombre)}.</span>
+      </label>`;
+    const qbox = a === "?" ? `<div class="qbox">
+        <label for="q-${key}">¿Qué necesitan preguntarle al equipo de ${esc(M.nombre)}?</label>
+        <textarea class="field" id="q-${key}" data-bind="qtext.${key}" placeholder="Escriban la pregunta que resolvería esta duda">${esc(S.qtext[key]||"")}</textarea>
+      </div>` : "";
+    return `<fieldset class="crit ${a !== undefined ? "done" : ""}">
+      <legend>${esc(c.q)}</legend>
+      <div class="opts">${opts}${unk}</div>${qbox}
+    </fieldset>`;
+  }).join("");
+  const nextIdx = TEAMS.indexOf(t) + 1;
+  const next = nextIdx < TEAMS.length
+    ? `<button class="btn primary" data-act="team:${TEAMS[nextIdx]}">Continuar con ${esc(MATRIZ[TEAMS[nextIdx]].nombre)} ${icon("arrow_forward")}</button>`
+    : `<button class="btn primary" data-act="go:hoja7">Continuar a la decisión ${icon("arrow_forward")}</button>`;
+  return `<p class="eyebrow">Paso 4 de 6 · Evaluación</p>
+    <div class="ttabs" role="tablist" aria-label="Equipos de la evaluación">${tabs}</div>
+    <div role="tabpanel" id="teampanel" aria-labelledby="tab-${t}">
+    <div class="team-head"><h1>${icon(TEAM_ICON[t])}${esc(M.nombre)}</h1>
+      <p class="lead">Elijan una opción por criterio. Si las notas no lo dicen, elijan «Aún no lo sabemos».</p></div>
+    ${crits}
+    </div>
+    <div class="actions">${next}</div>
+`;
+}
+
+function vHoja7(){
+  const qs = unknownQuestions();
+  const rows = TEAMS.map(t => { const s = scoreTeam(t), M = MATRIZ[t];
+    return `<div class="res-row">
+      <span class="nm">${icon(TEAM_ICON[t])}<span>${esc(M.nombre)}<small>${s.pts} pts · ${s.done} de ${s.total} criterios${s.complete ? "" : " (incompleto)"}</small></span></span>
+      <div class="scale">${M.escala.map((e,i) => `<span class="chip medium ${s.done && i === s.idx ? (s.complete ? "is-selected" : "fill") : ""}">${esc(e.l)}</span>`).join("")}</div>
+    </div>`; }).join("");
+  const adder = UI.adding ? `<div class="qbox" id="addBox">
+      <label for="newq">Escriban la pregunta clave</label>
+      <textarea class="field" id="newq" data-newq placeholder="Por ejemplo: ¿Quién aprueba los cambios en el proceso?">${esc(UI.draft || "")}</textarea>
+      <div class="actions" style="margin-top:var(--sp-12)"><button class="btn small primary" data-act="q-add">Agregar</button><button class="btn small tertiary" data-act="q-cancel">Cancelar</button></div>
+    </div>` : `<div class="actions" style="margin-top:var(--sp-16)"><button class="btn small" id="addBtn" data-act="q-open">${icon("add")} Agregar pregunta clave</button></div>`;
+  return `<p class="eyebrow">Paso 5 de 6 · Decisión</p>
+    <h1>Nuestra decisión</h1>
+    <hr class="divider">
+    <p class="lead">A quién involucramos y qué necesitamos saber antes de construir. Los niveles se calculan a partir de la evaluación.</p>
+    <section class="box"><h2>Nivel de participación por equipo</h2>
+      ${rows}
+      <div class="acc">
+        <h3 class="acc-h"><button class="acc-btn" id="accBtn" data-act="acc" aria-expanded="${!!UI.acc}" aria-controls="accPanel">
+          <span>¿Qué significa cada nivel?</span>${icon(UI.acc ? "expand_less" : "expand_more")}</button></h3>
+        <div class="acc-panel" id="accPanel" role="region" aria-labelledby="accBtn" ${UI.acc ? "" : "hidden"}>
+          <dl class="levels">
+            <div><dt>Autogestión</dt><dd>El área y DSIT pueden avanzar por su cuenta. El equipo no necesita participar en la iniciativa.</dd></div>
+            <div><dt>Consultivo</dt><dd>El equipo acompaña en momentos puntuales: revisa, da recomendaciones y valida las decisiones clave, sin hacer parte del equipo de trabajo.</dd></div>
+            <div><dt>Necesario</dt><dd>El equipo debe participar desde el inicio y durante toda la iniciativa, como parte del equipo de trabajo.</dd></div>
+          </dl>
+        </div>
+      </div></section>
+    <section class="box section">
+      <h2>Preguntas para el equipo Transversal</h2>
+      <p class="meta" style="margin:0">Aquí aparecen las preguntas que escribieron en la evaluación para cada criterio marcado como «Aún no lo sabemos».</p>
+      ${qs.length || claves().length ? `<ul class="qlist">${qs.map(q => `
+        <li><div class="src">${esc(MATRIZ[q.team].nombre)}</div>
+        ${q.text ? `<div>${esc(q.text)}</div>` : `<div class="empty">Sin pregunta redactada. Pueden escribirla en la evaluación.</div>`}</li>`).join("")}
+        ${claves().map((x,i) => `<li><div class="src">Pregunta clave</div>
+          <div class="row"><span>${esc(x)}</span><button class="btn small tertiary" data-act="q-del:${i}" aria-label="Eliminar la pregunta: ${esc(x)}">${icon("delete")} Eliminar</button></div></li>`).join("")}
+      </ul>` : `<p class="empty"><em>Todavía no hay preguntas.</em></p>`}
+      ${adder}
+    </section>
+    <div class="actions"><button class="btn primary" data-act="go:presentacion">Continuar a la presentación ${icon("arrow_forward")}</button></div>`;
+}
+
+function presHTML(){
+  const m = mesa(), qs = areaQuestionTexts();
+  return `<div class="pres-top">
+      <div><p class="eyebrow">Caso ${m.id} · Sesión DSIT</p><h1>${esc(m.titulo)}</h1></div>
+    </div>
+    <section class="psec"><hr class="divider"><div class="psec-head"><h2>Lo que pudimos responder con las notas</h2>
+      <button class="btn xs on-dark no-print" id="presEdit" data-act="pres-edit" aria-pressed="${!!UI.editPres}" data-html2canvas-ignore="true">${UI.editPres ? icon("check") + " Listo" : icon("edit") + " Editar respuestas"}</button></div>
+      <dl class="pans">${GUIA.map((g,i) => { const a = (S.resp[i]||"").trim();
+        return UI.editPres
+          ? `<div><dt><label for="pres-resp-${i}">${esc(g)}</label></dt><dd><textarea class="field on-dark" id="pres-resp-${i}" data-bind="resp.${i}" data-resp="${i}" placeholder="Sin respuesta en las notas">${esc(S.resp[i]||"")}</textarea></dd></div>`
+          : `<div><dt>${esc(g)}</dt><dd>${a ? esc(a) : `<span class="none">Sin respuesta en las notas</span>`}</dd></div>`; }).join("")}</dl>
+    </section>
+    <section class="psec"><hr class="divider"><h2>Nivel de participación del equipo Transversal</h2>
+      <div class="pcards">${TEAMS.map(t => { const s = scoreTeam(t), M = MATRIZ[t];
+        return `<div class="pcard"><div class="lab">${icon(TEAM_ICON[t])}${esc(M.nombre)}</div>
+          <div class="lvl">${s.done ? esc(s.nivel) : "Sin evaluar"}</div>
+          <div class="pp">${s.pts} pts${s.complete ? "" : ` · ${s.done} de ${s.total} criterios`}</div></div>`; }).join("")}
+      </div>
+    </section>
+    <section class="psec pqs"><hr class="divider"><h2>Preguntas para el equipo Transversal</h2>
+      ${qs.length ? `<ol>${qs.map(q => `<li>${esc(q)}</li>`).join("")}</ol>` : `<p class="pans"><span class="none">No quedaron preguntas abiertas.</span></p>`}
+    </section>`;
+}
+function vPresentacion(){
+  return `<div class="pres" id="pres">${presHTML()}</div>
+    <div class="actions no-print">
+      <button class="btn primary" id="pngBtn" data-act="export-png">${icon("image")} Exportar como PNG</button>
+    </div>`;
+}
+
+function vFacilitador(){
+  if(!DB) return `<h1>Vista del facilitador</h1><p class="lead">La comparación en vivo de las mesas solo está disponible en la versión publicada en Claude.</p>
+    <div class="actions"><button class="btn" data-act="go:inicio">Volver a la bienvenida</button></div>`;
+  const rows = Object.values(LIVE || {}).sort((a,b) => a.mesa - b.mesa);
+  const tag = t => !t.marcados ? `<span class="meta">Sin evaluar</span>` : `<span class="chip ${t.completo ? "is-selected" : "fill"}">${esc(t.nivel)}</span> <span class="meta">${t.pts} pts</span>`;
+  const hora = iso => { try{ return new Date(iso).toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } };
+  let insight = "";
+  if(rows.length >= 2){
+    const order = {recien:0, iniciativa:1, construccion:2, salio:3}, by = {};
+    rows.forEach(r => (by[r.etapaKey] = by[r.etapaKey] || []).push((r.preguntas||[]).length));
+    insight = `<div class="insight"><strong>Preguntas abiertas en promedio, según la etapa en que llegó el caso.</strong><br>${
+      Object.keys(by).sort((a,b) => order[a]-order[b]).map(k => `${esc(rows.find(r => r.etapaKey === k).etapa)}: ${(by[k].reduce((x,y)=>x+y,0)/by[k].length).toFixed(1)}`).join(" · ")}</div>`;
+  }
+  return `<h1>Vista del facilitador</h1><hr class="divider">
+    <p class="lead">Los resultados de cada mesa llegan aquí mientras trabajan.</p>
+    ${rows.length ? `<div class="tablewrap"><table>
+      <thead><tr><th>Caso</th><th>Avance</th><th>Experiencia</th><th>Gestión del Cambio</th><th>Comunicaciones</th><th>Preguntas para el equipo Transversal</th><th></th></tr></thead>
+      <tbody>${rows.map(r => `<tr>
+        <td><strong>${r.mesa}</strong> · ${esc(r.titulo)}<br><span class="meta">Llegó: ${esc(r.etapa)}</span></td>
+        <td>${r.progreso ? `${r.progreso.marcados}/${r.progreso.total} criterios` : ""}<br><span class="meta">${r.respondidas ?? 0}/7 respondidas${r.actualizado ? " · " + hora(r.actualizado) : ""}</span></td>
+        <td>${tag(r.equipos.exp)}</td><td>${tag(r.equipos.cam)}</td><td>${tag(r.equipos.com)}</td>
+        <td>${(r.preguntas||[]).length}${(r.preguntas||[]).length ? `<details><summary class="meta">Ver</summary><ol>${r.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ol></details>` : ""}</td>
+        <td><button class="btn small tertiary" data-act="fac-remove:${r.mesa}">Quitar</button></td>
+      </tr>`).join("")}</tbody></table></div>${insight}
+      <div class="actions"><button class="btn" data-act="fac-csv">${icon("download")} Descargar comparación (.csv)</button><button class="btn tertiary" data-act="fac-clear">Vaciar comparación</button></div>`
+      : `<p class="empty">Todavía ninguna mesa ha empezado.</p>`}
+    <div class="actions"><button class="btn tertiary small" data-act="go:inicio">Volver a la bienvenida</button></div>`;
+}
+function facCsv(){
+  const q = v => `"${String(v ?? "").replace(/"/g,'""')}"`;
+  const head = ["Número","Caso","Etapa","Experiencia","Pts Exp","Gestión del Cambio","Pts Cambio","Comunicaciones","Pts Com","Preguntas clave respondidas","Preguntas para el equipo Transversal"];
+  const lines = Object.values(LIVE || {}).sort((a,b) => a.mesa-b.mesa).map(r => [r.mesa, r.titulo, r.etapa, r.equipos.exp.nivel, r.equipos.exp.pts, r.equipos.cam.nivel, r.equipos.cam.pts, r.equipos.com.nivel, r.equipos.com.pts, `${r.respondidas ?? 0}/7`, (r.preguntas||[]).join(" | ")].map(q).join(","));
+  return "\uFEFF" + [head.map(q).join(","), ...lines].join("\n");
+}
+
+function render(){
+  const active = document.activeElement, fid = active && active.id ? active.id : null;
+  const sel = fid && ("selectionStart" in active) ? [active.selectionStart, active.selectionEnd] : null;
+  if(!S.mesa && !["inicio","facilitador"].includes(S.screen)) S.screen = "inicio";
+  const views = {inicio:vInicio, caso:vCaso, notas:vNotas, tarjeta:vTarjeta, hoja7:vHoja7, presentacion:vPresentacion, facilitador:vFacilitador};
+  document.getElementById("app").innerHTML = (views[S.screen] || vInicio)();
+  renderNav(); renderTimer();
+  if(fid){ const el = document.getElementById(fid); if(el){ el.focus({preventScroll:true}); if(sel && el.setSelectionRange) try{ el.setSelectionRange(sel[0], sel[1]); }catch(e){} } }
+}
+function go(screen){
+  UI.editPres = false;
+  if(screen === "tarjeta" && S.screen !== "tarjeta") S.team = "exp";
+  const i = STEP_KEYS.indexOf(screen); if(i > (S.max || 0)) S.max = i;
+  S.screen = screen; save(); render();
+  try{ window.scrollTo({top:0}); }catch(e){}
+  document.getElementById("app").focus({preventScroll:true});
+}
+
+/* =========================================================
+   EXPORTAR PRESENTACIÓN A PNG
+   ========================================================= */
+function loadHtml2canvas(){
+  if(window.html2canvas) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+    s.onload = res; s.onerror = rej; document.head.appendChild(s);
+  });
+}
+async function exportPNG(){
+  if(UI.editPres){ UI.editPres = false; render(); }
+  const btn = document.getElementById("pngBtn"), m = mesa();
+  if(btn){ btn.disabled = true; btn.innerHTML = `${icon("image")} Generando imagen…`; }
+  try{
+    await loadHtml2canvas();
+    if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    const canvas = await window.html2canvas(document.getElementById("pres"), {
+      scale:2, backgroundColor:"#191916", logging:false, windowWidth:1280,
+      onclone: doc => { const el = doc.getElementById("pres"); if(el) el.classList.add("export"); }
+    });
+    const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
+    if(!blob) throw new Error("png");
+    const ok = await saveFile(`caso-${m.id}-${slug(m.titulo)}.png`, blob, "image/png");
+    if(ok) toast("Imagen exportada.");
+  }catch(e){
+    toast("No se pudo generar la imagen. Revisen la conexión e inténtenlo de nuevo.");
+  }finally{
+    const b = document.getElementById("pngBtn");
+    if(b){ b.disabled = false; b.innerHTML = `${icon("image")} Exportar como PNG`; }
+  }
+}
+
+/* =========================================================
+   EVENTOS
+   ========================================================= */
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const [act, a1] = b.dataset.act.split(":");
+  switch(act){
+    case "go": go(a1); break;
+    case "mesa":
+      if(S.mesa === +a1){ go(S.screen === "inicio" ? "caso" : S.screen); break; }
+      if(S.mesa && !(await ask("Cambiar de grupo borra lo que han avanzado en este dispositivo y reinicia el tiempo. ¿Quieren cambiar?", "Cambiar de grupo"))) break;
+      S = blank(); S.mesa = +a1; UI.adding = false; go("caso"); break;
+    case "caso-next": startTimer(); go("notas"); break;
+    case "team": S.team = a1; save(); render(); document.getElementById("tab-"+a1)?.focus({preventScroll:true}); try{ window.scrollTo({top:0}); }catch(err){} break;
+    case "timer-toggle": timerToggle(); break;
+    case "music": Music.toggle(); break;
+    case "timer-reset":
+      if(await ask("¿Reiniciar el tiempo? Vuelve a 20 minutos y queda en pausa.", "Reiniciar el tiempo")){ S.timer = newTimer(); Music.stop(); save(); render(); }
+      break;
+    case "pres-edit":
+      UI.editPres = !UI.editPres; render();
+      (UI.editPres ? document.getElementById("pres-resp-0") : document.getElementById("presEdit"))?.focus({preventScroll:true});
+      break;
+    case "acc": UI.acc = !UI.acc; render(); document.getElementById("accBtn")?.focus({preventScroll:true}); break;
+    case "q-open": UI.adding = true; UI.draft = ""; render(); document.getElementById("newq")?.focus(); break;
+    case "q-cancel": UI.adding = false; UI.draft = ""; render(); document.getElementById("addBtn")?.focus({preventScroll:true}); break;
+    case "q-add": addClave(); break;
+    case "q-del": { const list = claves(); list.splice(+a1, 1); S.claves = list; save(); render(); document.getElementById("addBtn")?.focus({preventScroll:true}); break; }
+    case "export-png": exportPNG(); break;
+    case "fac-remove":
+      if(DB && await ask(`¿Quitar la mesa ${a1} de la comparación? Si la mesa sigue trabajando, volverá a aparecer.`, "Quitar"))
+        DB.doc("resultados/mesa-" + a1).delete().catch(() => toast("No tienes permiso para quitar resultados."));
+      break;
+    case "fac-clear":
+      if(DB && LIVE && await ask("¿Vaciar la comparación? Úsalo para empezar una sesión nueva.", "Vaciar"))
+        Promise.all(Object.keys(LIVE).map(k => DB.doc("resultados/mesa-" + k).delete())).catch(() => toast("No tienes permiso para borrar resultados."));
+      break;
+    case "fac-csv": saveFile("dsit-comparacion-mesas.csv", facCsv(), "text/csv;charset=utf-8"); break;
+    case "toast-close": document.getElementById("toastHost").innerHTML = ""; break;
+  }
+});
+document.addEventListener("keydown", e => {
+  if(e.target.dataset && e.target.dataset.newq !== undefined){
+    if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); addClave(); return; }
+    if(e.key === "Escape"){ UI.adding = false; UI.draft = ""; render(); document.getElementById("addBtn")?.focus(); return; }
+  }
+  const tab = e.target.closest && e.target.closest(".ttab");
+  if(tab && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "Home" || e.key === "End")){
+    e.preventDefault();
+    const i = TEAMS.indexOf(S.team);
+    const n = e.key === "Home" ? 0 : e.key === "End" ? TEAMS.length - 1 : (i + (e.key === "ArrowRight" ? 1 : -1) + TEAMS.length) % TEAMS.length;
+    S.team = TEAMS[n]; save(); render(); document.getElementById("tab-" + S.team)?.focus();
+  }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t.type === "radio" && t.name.startsWith("ans-")){
+    const [, team, ci] = t.name.split("-");
+    S.ans[team][+ci] = t.value === "?" ? "?" : +t.value;
+    save(); render();
+    if(t.value === "?") document.getElementById(`q-${team}-${ci}`)?.focus({preventScroll:true});
+  }
+});
+function addClave(){
+  const v = (UI.draft || "").trim();
+  if(!v){ document.getElementById("newq")?.focus(); toast("Escriban la pregunta antes de agregarla."); return; }
+  S.claves = [...claves(), v]; UI.adding = false; UI.draft = ""; save(); render();
+  document.getElementById("addBtn")?.focus({preventScroll:true});
+}
+document.addEventListener("input", e => {
+  const t = e.target;
+  if(t.dataset.newq !== undefined){ UI.draft = t.value; return; }
+  if(!t.dataset.bind) return;
+  setPath(S, t.dataset.bind, t.value); save();
+  if(t.dataset.resp !== undefined){
+    document.getElementById("qc-" + t.dataset.resp)?.classList.toggle("done", t.value.trim() !== "");
+    const n = answered();
+    const rc = document.getElementById("respCount"); if(rc) rc.textContent = `${n} de ${GUIA.length} respondidas`;
+    const rb = document.getElementById("respBar"); if(rb) rb.style.width = `${100*n/GUIA.length}%`;
+  }
+  renderNav();
+});
+
+render();
+setInterval(timerTick, 1000);
+</script>
+</body>
+</html>
