@@ -1027,7 +1027,7 @@ function vHoja7(){
   const qs = unknownQuestions();
   const rows = TEAMS.map(t => { const s = scoreTeam(t), M = MATRIZ[t];
     return `<div class="res-row">
-      <span class="nm">${icon(TEAM_ICON[t])}<span>${esc(M.nombre)}<small>${s.pts} pts · ${s.done} de ${s.total} criterios${s.complete ? "" : " (incompleto)"}</small></span></span>
+      <span class="nm">${icon(TEAM_ICON[t])}<span>${esc(M.nombre)}<small>${s.done} de ${s.total} criterios${s.complete ? "" : " (incompleto)"}</small></span></span>
       <div class="scale">${M.escala.map((e,i) => `<span class="chip medium ${s.done && i === s.idx ? (s.complete ? "is-selected" : "fill") : ""}">${esc(e.l)}</span>`).join("")}</div>
     </div>`; }).join("");
   const adder = UI.adding ? `<div class="qbox" id="addBox">
@@ -1082,7 +1082,7 @@ function presHTML(){
       <div class="pcards">${TEAMS.map(t => { const s = scoreTeam(t), M = MATRIZ[t];
         return `<div class="pcard"><div class="lab">${icon(TEAM_ICON[t])}${esc(M.nombre)}</div>
           <div class="lvl">${s.done ? esc(s.nivel) : "Sin evaluar"}</div>
-          <div class="pp">${s.pts} pts${s.complete ? "" : ` · ${s.done} de ${s.total} criterios`}</div></div>`; }).join("")}
+          ${s.complete ? "" : `<div class="pp">${s.done} de ${s.total} criterios</div>`}</div>`; }).join("")}
       </div>
     </section>
     <section class="psec pqs"><hr class="divider"><h2>Preguntas para el equipo Transversal</h2>
