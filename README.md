@@ -29,6 +29,8 @@ Necesita conexión a internet para cargar las fuentes (Google Fonts) y, al expor
 2. En **Source**, elige **Deploy from a branch**, la rama `main` y la carpeta `/ (root)`.
 3. Guarda. En unos minutos la herramienta queda disponible en `https://mospina19.github.io/actividad-dsit/`.
 
+El repositorio también está vinculado a Netlify, que publica la rama `main` en https://actividad-dsit.netlify.app/. Cada `git push` a `main` actualiza los dos sitios.
+
 ## Editar el contenido
 
 Todo el contenido está al inicio del bloque `<script>` de `index.html`, separado de la lógica:
@@ -53,6 +55,8 @@ Todo el contenido está al inicio del bloque `<script>` de `index.html`, separad
 ## Versión publicada en Claude
 
 El mismo archivo funciona como artefacto publicado en claude.ai. Ahí, además, los resultados de cada grupo llegan en vivo a la **vista del facilitador** (enlace al final de la Bienvenida) y se pueden descargar en CSV. Fuera de Claude esa vista no aparece.
+
+El artefacto no se actualiza con el repositorio: después de cambiar `index.html` hay que volver a publicarlo en claude.ai.
 
 ## Estructura
 

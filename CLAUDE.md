@@ -1,11 +1,19 @@
 # Actividad práctica DSIT
 
-Herramienta web de un solo archivo (`index.html`: HTML, CSS y JavaScript) para la actividad práctica de la Sesión DSIT de la Universidad de los Andes. Se publica con GitHub Pages desde la rama `main`, carpeta raíz: https://mospina19.github.io/actividad-dsit/
+Herramienta web de un solo archivo (`index.html`: HTML, CSS y JavaScript) para la actividad práctica de la Sesión DSIT de la Universidad de los Andes. Se publica automáticamente desde la rama `main`, carpeta raíz, en dos sitios:
+
+- Netlify: https://actividad-dsit.netlify.app/
+- GitHub Pages: https://mospina19.github.io/actividad-dsit/
+
+También existe como artefacto en claude.ai: https://claude.ai/artifact/YMAxfsUgNgjsoT3WDr8PDF. El artefacto no está conectado al repositorio.
 
 ## Flujo de trabajo
 
 - Todos los cambios se hacen en `index.html`. No agregues archivos ni dependencias de instalación.
-- Al terminar un cambio: revisa que el JavaScript no tenga errores, haz commit en español con un mensaje claro y haz `git push` a `main`. GitHub Pages publica solo.
+- El `index.html` de este repositorio es la fuente oficial. Los cambios se hacen aquí, no en el artefacto.
+- Al terminar un cambio: revisa que el JavaScript no tenga errores, haz commit en español con un mensaje claro y haz `git push` a `main`. Netlify y GitHub Pages publican solos.
+- Después del push, si se pide, vuelve a publicar el artefacto desde este `index.html` en la misma URL (Artifact con `url`, leyéndolo antes). No crees un artefacto nuevo.
+- Si alguien editó el artefacto directamente en claude.ai, baja esos cambios a `index.html` y haz commit antes de seguir; publicar desde el archivo local los sobrescribiría. Al bajarlo, quita el envoltorio `<!doctype html><html><head>…<body>` que agrega la publicación al inicio y el `</body></html>` extra al final.
 - Si el cambio afecta algo descrito en `README.md` (recorrido, niveles, puntajes, estructura), actualízalo en el mismo commit.
 - El mismo archivo también se publica como artefacto en claude.ai. Ahí existe `window.claude` (base de datos en vivo para la vista del facilitador y descargas). Fuera de Claude esas funciones no existen y el código debe seguir funcionando sin ellas.
 
